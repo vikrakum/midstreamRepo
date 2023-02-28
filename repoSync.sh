@@ -12,7 +12,7 @@ set -euxo pipefail
 # git fetch from upstream master and git merge the changes and look into cases of merge conflict.
 
 repoSyncing() {
-    echo "---------------Syncing process started--------------------------------------------"
+    echo "----------------Syncing process started--------------------------------------------"
 
     # Cheking if working tree clean!
     local branch=$(git rev-parse --abbrev-ref HEAD)
