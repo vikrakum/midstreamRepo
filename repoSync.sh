@@ -39,6 +39,8 @@ repoSyncing() {
 
     echo "----switching to master branch----"
     git checkout master
+    echo "Branches List"
+    git branch
     echo "Enter sync branch name"
     read syncBranch
     git checkout ${syncBranch}
