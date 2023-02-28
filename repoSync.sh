@@ -51,7 +51,7 @@ repoSyncing() {
     git fetch upstream master
     git merge upstream/master
     echo "Logging recent details for you."
-    git log ----oneline
+    git log --oneline
     echo "----switching to sync branch----"
     echo "---------------Process End--------------"
 }
