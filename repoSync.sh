@@ -12,8 +12,9 @@ set -euxo pipefail
 # git fetch from upstream master and git merge the changes and look into cases of merge conflict.
 
 repoSyncing() {
+    echo "---------------Syncing process started--------------------------------------------"
+
     # Cheking if working tree clean!
-    echo "---------------Syncing process started---------------"
     local branch=$(git rev-parse --abbrev-ref HEAD)
     echo "Current working branch = $branch"
     echo "Cheking if there is nothing to commit"
@@ -43,6 +44,7 @@ repoSyncing() {
     git branch
     echo "Enter sync branch name"
     read syncBranch
+    echo "----switching to sync branch----"
     git checkout ${syncBranch}
     echo "fetching + merging changes from ORIGIN master"
     git fetch origin master
@@ -52,8 +54,9 @@ repoSyncing() {
     git merge upstream/master
     echo "Logging recent details for you."
     git log --oneline
-    echo "----switching to sync branch----"
-    echo "---------------Process End--------------"
+    git push -u origin ${syncBranch}
+    
+    echo "---------------Process End------------------------------------------"
 }
 
 main() {
