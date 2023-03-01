@@ -51,7 +51,7 @@ repoSyncing() {
     git merge origin/master
     echo "fetching + merging changes from UPSTREAM master"
     git fetch upstream master
-    git merge upstream/master
+    git rebase upstream/master
     echo "Logging recent details for you."
     git log --oneline
     git push -u origin ${syncBranch}
