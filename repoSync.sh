@@ -18,21 +18,20 @@ repoSyncing() {
 
     # Cheking if working tree clean!
     local branch=$(git rev-parse --abbrev-ref HEAD)
-    echo "Current working branch = $branch"
-    echo "Cheking if there is nothing to commit"
+    echo "--Current working branch = $branch"
+    echo "--Cheking if there is nothing to commit"
     unstaged_num_files=$(git status --porcelain  | { egrep '^\s?[?]' || true; } | wc -l)
     staged_num_files=$(git status --porcelain  | { egrep '^\s?[MADRC]' || true; } | wc -l)
     if ((unstaged_num_files>0 || staged_num_files>0)); then
         if ((staged_num_files>0 && unstaged_num_files > 0)); then
-            echo "$unstaged_num_files Unstaged and $staged_num_files Staged files found, Cleaning working tree to proceed!"
+            echo "--$unstaged_num_files Unstaged and $staged_num_files Staged files found, Cleaning working tree to proceed!"
         elif ((unstaged_num_files == 0 && staged_num_files>0)); then
-            echo "$staged_num_files Staged files found, Cleaning working tree to proceed!"
+            echo "--$staged_num_files Staged files found, Cleaning working tree to proceed!"
         elif ((unstaged_num_files > 0 && staged_num_files==0)); then
-            echo "$unstaged_num_files Unstaged files found, Cleaning working tree to proceed!"
+            echo "--$unstaged_num_files Unstaged files found, Cleaning working tree to proceed!"
         fi
         git add .
-        echo "Enter commit message"
-        echo "Commiting and pushing all changes made, with DCO sign"
+        echo "--Commiting and pushing all changes made, with DCO sign"
         git commit -s -m "commiting all changes b4 starting sync process"
         git push -u origin ${branch}
     else
@@ -41,33 +40,50 @@ repoSyncing() {
 
     echo "----switching to master branch----"
     git checkout master
-    echo "Branches List"
+    echo "--Branches List"
     git branch
-    echo "Enter sync branch name"
     echo "----switching to sync branch----"
     git checkout ${syncBranch}
-    echo "fetching + merging changes from ORIGIN master"
+    echo "--fetching + merging changes from ORIGIN master"
     git fetch origin master
     git merge origin/master
-    echo "fetching + merging changes from UPSTREAM master"
+    echo "--fetching + merging changes from UPSTREAM master"
     git fetch upstream ${target_upstream_branch}
     git merge --strategy-option=ours upstream/${target_upstream_branch}
-    echo "Logging recent details for you."
-    git log --oneline
+    echo "--Logging recent details for you."
+    git log --oneline --max-count=10
     git push -u origin ${syncBranch}
     
     echo "---------------Process End------------------------------------------"
 }
 
+show_help() {
+    echo ""
+    echo "Usage: ./repoSync [sync branch] [target branc]"
+    echo ""
+    echo "sync branch     branch in where you want to sync upstream"
+    echo "target branch   upstream branch from where you wanna pick up sync"
+    echo ""
+}
+
+
 main() {
-    if [ $# -ne 2 ]; then
-        echo "Use as: $0 [sync Branch] target Branch"
+    if [ $# -lt 1 ]; then
+        echo "Use as: $0 [sync Branch] [target Branch]"
+        echo "pass -h|--help for in detail description"
         exit 1
     fi
-    target_upstream_branch=$1
-    syncBranch=$2
-    repoSyncing ${syncBranch} ${target_upstream_branch}
-    # exit 0
+
+    while [[ "$#" -gt 0 ]]; do
+        case $1 in
+            -h|--help) show_help; exit 0;;
+            *)
+                syncBranch=$1
+                target_upstream_branch=$2
+                repoSyncing ${syncBranch} ${target_upstream_branch}
+        esac
+        shift
+    done
 }
 
 main $*
