@@ -1,0 +1,1904 @@
+{
+  "pigConfiguration" : {
+    "product" : {
+      "name" : "Red Hat Integration Service Registry",
+      "abbreviation" : "RHISR",
+      "issueTrackerUrl" : "http://issues.jboss.org/browse/IPT"
+    },
+    "version" : "2.3.3",
+    "milestone" : "CR1",
+    "group" : "RHISR-2.3.3.CR1",
+    "defaultBuildParameters" : {
+      "brewPullActive" : false,
+      "buildType" : "MVN",
+      "buildCategory" : "STANDARD"
+    },
+    "builds" : [ {
+      "name" : "service-registry-2.3.3.Final.CR1",
+      "project" : "service-registry",
+      "buildScript" : "ls -lrt\nexport REG=\"http://indy.indy.svc.cluster.local/api/folo/track/${buildContentId}/npm/remote/yarnpkg/\"\nsed -i \"s#https://registry.npmjs.org/#${REG}#g\" ui/package-lock.json\nsed -i 's#https:#http:#g' ui/package-lock.json\n#sed -i \"s#https://registry.yarnpkg.com/#${REG}#g\" ui/package-lock.json\n\n\nmvn -B install -pl '!docs, !docs/rest-api' \\\n    dependency:tree \\\n    -DskipTests \\\n    -Dtar.long.file.mode=posix \\\n    -Dproxy-server=$REG \\\n    -Dcustom-registry=$REG \\\n    -DnpmRegistryURL2=$REG \\\n    -Dyarn-insecure \\\n    -DyarnRegistry=$REG \\\n    -Dproxy-user=\"${buildContentId}+tracking\" \\\n    -Dproxy-password=\"${accessToken}\" \\\n    -Dproxy-port=\"${proxyPort}\" \\\n    -DyarnDownloadRoot=http://download.eng.bos.redhat.com/rcm-guest/staging/integration/service-registry-dev/dist/yarn/ \\\n    -DnodeDownloadRoot=http://download.eng.bos.redhat.com/rcm-guest/staging/integration/service-registry-dev/dist/node/ \\\n    -DnpmDownloadRoot=http://download-node-02.eng.bos.redhat.com/rcm-guest/staging/fuse/npm/dist/npm/ \\\n    -Pwith-proxy \\\n    -Pwith-custom-registry \\\n    -Pverbose \\\n    -Pprod \\\n    -Pkafkasql \\\n    -Psql",
+      "scmUrl" : "git+ssh://code.engineering.redhat.com/redhat-integration/apicurio-registry.git",
+      "scmRevision" : "2.3.x-redhat",
+      "buildPodMemory" : 6.0,
+      "alignmentParameters" : [ "-DgroovyScripts=https://gitlab.cee.redhat.com/service-registry/srs-ci-tools/-/raw/pnc-rhi-service-registry/pme-scripts/GenericManipulations.groovy,https://gitlab.cee.redhat.com/service-registry/srs-ci-tools/-/raw/pnc-rhi-service-registry/pme-scripts/Exclusions.groovy", "-DversionOverride=2.3.3.Final", "-DstrictPropertyValidation=false", "-DdependencyOverride.io.confluent:kafka-schema-registry-client@*=7.3.0", "-DdependencyOverride.org.yaml:snakeyaml@*=1.33.0.redhat-00001" ],
+      "extraRepositories" : [ "https://packages.confluent.io/maven/" ],
+      "brewPullActive" : false,
+      "buildType" : "MVN",
+      "buildCategory" : "STANDARD"
+    } ],
+    "outputPrefixes" : {
+      "releaseFile" : "service-registry",
+      "releaseDir" : "service-registry"
+    },
+    "flow" : {
+      "licensesGeneration" : {
+        "strategy" : "GENERATE"
+      },
+      "repositoryGeneration" : {
+        "strategy" : "BUILD_CONFIGS",
+        "additionalArtifacts" : [ ],
+        "externalAdditionalArtifacts" : [ ],
+        "excludeArtifacts" : [ ".*@redhat-cloud-services.*" ],
+        "sourceBuilds" : [ "service-registry-2.3.3.Final.CR1" ],
+        "excludeSourceBuilds" : [ ],
+        "filterArtifacts" : [ ],
+        "ignored" : [ ],
+        "stages" : [ ],
+        "parameters" : { },
+        "steps" : [ ]
+      },
+      "javadocGeneration" : {
+        "strategy" : "GENERATE",
+        "sourceBuilds" : [ ],
+        "customPmeParameters" : [ ],
+        "alignmentParameters" : [ ]
+      },
+      "sourcesGeneration" : {
+        "strategy" : "GENERATE",
+        "sourceBuild" : null,
+        "sourceArtifact" : null,
+        "whitelistedArtifacts" : [ ]
+      }
+    },
+    "majorMinor" : "2.3",
+    "micro" : "3",
+    "addons" : {
+      "notYetAlignedFromDependencyTree" : null,
+      "offlineManifestGenerator" : null
+    }
+  },
+  "pncImportResult" : {
+    "milestone" : {
+      "id" : "2133",
+      "version" : "2.3.3.CR1",
+      "endDate" : null,
+      "startingDate" : 1678147200.000000000,
+      "plannedEndDate" : 1678233600.000000000,
+      "productVersion" : {
+        "id" : "375",
+        "version" : "2.3",
+        "attributes" : {
+          "BREW_TAG_PREFIX" : "rhisr-2.3-pnc"
+        }
+      },
+      "productRelease" : null,
+      "distributedArtifactsImporter" : null,
+      "deliveredArtifactsImporter" : null
+    },
+    "buildGroup" : {
+      "id" : "1540",
+      "name" : "RHISR-2.3.3.CR1",
+      "productVersion" : {
+        "id" : "375",
+        "version" : "2.3",
+        "attributes" : {
+          "BREW_TAG_PREFIX" : "rhisr-2.3-pnc"
+        }
+      },
+      "buildConfigs" : {
+        "9720" : {
+          "id" : "9720",
+          "name" : "service-registry-2.3.3.Final.CR1",
+          "description" : null,
+          "buildScript" : "ls -lrt\nexport REG=\"http://indy.indy.svc.cluster.local/api/folo/track/${buildContentId}/npm/remote/yarnpkg/\"\nsed -i \"s#https://registry.npmjs.org/#${REG}#g\" ui/package-lock.json\nsed -i 's#https:#http:#g' ui/package-lock.json\n#sed -i \"s#https://registry.yarnpkg.com/#${REG}#g\" ui/package-lock.json\n\n\nmvn -B deploy -pl '!docs, !docs/rest-api' \\\n    dependency:tree \\\n    -DskipTests \\\n    -Dtar.long.file.mode=posix \\\n    -Dproxy-server=$REG \\\n    -Dcustom-registry=$REG \\\n    -DnpmRegistryURL2=$REG \\\n    -Dyarn-insecure \\\n    -DyarnRegistry=$REG \\\n    -Dproxy-user=\"${buildContentId}+tracking\" \\\n    -Dproxy-password=\"${accessToken}\" \\\n    -Dproxy-port=\"${proxyPort}\" \\\n    -DyarnDownloadRoot=http://download.eng.bos.redhat.com/rcm-guest/staging/integration/service-registry-dev/dist/yarn/ \\\n    -DnodeDownloadRoot=http://download.eng.bos.redhat.com/rcm-guest/staging/integration/service-registry-dev/dist/node/ \\\n    -DnpmDownloadRoot=http://download-node-02.eng.bos.redhat.com/rcm-guest/staging/fuse/npm/dist/npm/ \\\n    -Pwith-proxy \\\n    -Pwith-custom-registry \\\n    -Pverbose \\\n    -Pprod \\\n    -Pkafkasql \\\n    -Psql",
+          "scmRevision" : "2.3.x-redhat",
+          "creationTime" : 1678177676.937000000,
+          "modificationTime" : 1678177676.936000000,
+          "buildType" : "MVN",
+          "defaultAlignmentParams" : "-DdependencySource=REST -DrepoRemovalBackup=repositories-backup.xml -DversionSuffixStrip= -DreportNonAligned=true -DstrictPropertyValidation=true",
+          "brewPullActive" : false
+        }
+      }
+    },
+    "version" : {
+      "id" : "375",
+      "version" : "2.3",
+      "attributes" : {
+        "BREW_TAG_PREFIX" : "rhisr-2.3-pnc"
+      },
+      "product" : {
+        "id" : "111",
+        "name" : "Red Hat Integration Service Registry",
+        "description" : null,
+        "abbreviation" : "RHISR",
+        "productManagers" : null,
+        "productPagesCode" : null
+      },
+      "currentProductMilestone" : {
+        "id" : "2133",
+        "version" : "2.3.3.CR1",
+        "endDate" : null,
+        "startingDate" : 1678147200.000000000,
+        "plannedEndDate" : 1678233600.000000000
+      },
+      "productMilestones" : {
+        "1877" : {
+          "id" : "1877",
+          "version" : "2.3.0.DR1",
+          "endDate" : null,
+          "startingDate" : 1663286400.000000000,
+          "plannedEndDate" : 1663372800.000000000
+        },
+        "2133" : {
+          "id" : "2133",
+          "version" : "2.3.3.CR1",
+          "endDate" : null,
+          "startingDate" : 1678147200.000000000,
+          "plannedEndDate" : 1678233600.000000000
+        },
+        "2131" : {
+          "id" : "2131",
+          "version" : "2.3.3.DR1",
+          "endDate" : null,
+          "startingDate" : 1678147200.000000000,
+          "plannedEndDate" : 1678233600.000000000
+        },
+        "1878" : {
+          "id" : "1878",
+          "version" : "2.3.0.CR1",
+          "endDate" : 1664949011.102000000,
+          "startingDate" : 1663286400.000000000,
+          "plannedEndDate" : 1663372800.000000000
+        }
+      },
+      "productReleases" : {
+        "72" : {
+          "id" : "72",
+          "version" : "2.3.0.GA",
+          "supportLevel" : "SUPPORTED",
+          "releaseDate" : 1664971200.000000000,
+          "commonPlatformEnumeration" : null,
+          "productPagesCode" : null
+        }
+      },
+      "groupConfigs" : {
+        "1325" : {
+          "id" : "1325",
+          "name" : "RHISR-2.3.0.CR1"
+        },
+        "1324" : {
+          "id" : "1324",
+          "name" : "RHISR-2.3.0.DR1"
+        },
+        "1540" : {
+          "id" : "1540",
+          "name" : "RHISR-2.3.3.CR1"
+        },
+        "1538" : {
+          "id" : "1538",
+          "name" : "RHISR-2.3.3.DR1"
+        }
+      },
+      "buildConfigs" : {
+        "8455" : {
+          "id" : "8455",
+          "name" : "service-registry-2.3.0.Final.CR1",
+          "description" : null,
+          "buildScript" : "ls -lrt\nexport REG=\"http://indy.indy.svc.cluster.local/api/folo/track/${buildContentId}/npm/remote/yarnpkg/\"\nsed -i \"s#https://registry.npmjs.org/#${REG}#g\" ui/package-lock.json\nsed -i 's#https:#http:#g' ui/package-lock.json\n#sed -i \"s#https://registry.yarnpkg.com/#${REG}#g\" ui/package-lock.json\n\n\nmvn -B deploy -pl '!docs, !docs/rest-api' \\\n    dependency:tree \\\n    -DskipTests \\\n    -Dtar.long.file.mode=posix \\\n    -Dproxy-server=$REG \\\n    -Dcustom-registry=$REG \\\n    -DnpmRegistryURL2=$REG \\\n    -Dyarn-insecure \\\n    -DyarnRegistry=$REG \\\n    -Dproxy-user=\"${buildContentId}+tracking\" \\\n    -Dproxy-password=\"${accessToken}\" \\\n    -Dproxy-port=\"${proxyPort}\" \\\n    -DyarnDownloadRoot=http://download.eng.bos.redhat.com/rcm-guest/staging/integration/service-registry-dev/dist/yarn/ \\\n    -DnodeDownloadRoot=http://download.eng.bos.redhat.com/rcm-guest/staging/integration/service-registry-dev/dist/node/ \\\n    -DnpmDownloadRoot=http://download-node-02.eng.bos.redhat.com/rcm-guest/staging/fuse/npm/dist/npm/ \\\n    -Pwith-proxy \\\n    -Pwith-custom-registry \\\n    -Pverbose \\\n    -Pprod \\\n    -Pkafkasql \\\n    -Psql",
+          "scmRevision" : "2.3.x-redhat",
+          "creationTime" : 1663328911.605000000,
+          "modificationTime" : 1664515006.610000000,
+          "buildType" : "MVN",
+          "defaultAlignmentParams" : "-DdependencySource=REST -DrepoRemovalBackup=repositories-backup.xml -DversionSuffixStrip= -DreportNonAligned=true -DstrictPropertyValidation=true",
+          "brewPullActive" : false
+        },
+        "9720" : {
+          "id" : "9720",
+          "name" : "service-registry-2.3.3.Final.CR1",
+          "description" : null,
+          "buildScript" : "ls -lrt\nexport REG=\"http://indy.indy.svc.cluster.local/api/folo/track/${buildContentId}/npm/remote/yarnpkg/\"\nsed -i \"s#https://registry.npmjs.org/#${REG}#g\" ui/package-lock.json\nsed -i 's#https:#http:#g' ui/package-lock.json\n#sed -i \"s#https://registry.yarnpkg.com/#${REG}#g\" ui/package-lock.json\n\n\nmvn -B deploy -pl '!docs, !docs/rest-api' \\\n    dependency:tree \\\n    -DskipTests \\\n    -Dtar.long.file.mode=posix \\\n    -Dproxy-server=$REG \\\n    -Dcustom-registry=$REG \\\n    -DnpmRegistryURL2=$REG \\\n    -Dyarn-insecure \\\n    -DyarnRegistry=$REG \\\n    -Dproxy-user=\"${buildContentId}+tracking\" \\\n    -Dproxy-password=\"${accessToken}\" \\\n    -Dproxy-port=\"${proxyPort}\" \\\n    -DyarnDownloadRoot=http://download.eng.bos.redhat.com/rcm-guest/staging/integration/service-registry-dev/dist/yarn/ \\\n    -DnodeDownloadRoot=http://download.eng.bos.redhat.com/rcm-guest/staging/integration/service-registry-dev/dist/node/ \\\n    -DnpmDownloadRoot=http://download-node-02.eng.bos.redhat.com/rcm-guest/staging/fuse/npm/dist/npm/ \\\n    -Pwith-proxy \\\n    -Pwith-custom-registry \\\n    -Pverbose \\\n    -Pprod \\\n    -Pkafkasql \\\n    -Psql",
+          "scmRevision" : "2.3.x-redhat",
+          "creationTime" : 1678177676.937000000,
+          "modificationTime" : 1678177676.936000000,
+          "buildType" : "MVN",
+          "defaultAlignmentParams" : "-DdependencySource=REST -DrepoRemovalBackup=repositories-backup.xml -DversionSuffixStrip= -DreportNonAligned=true -DstrictPropertyValidation=true",
+          "brewPullActive" : false
+        },
+        "9715" : {
+          "id" : "9715",
+          "name" : "service-registry-2.3.3.Final.DR1",
+          "description" : null,
+          "buildScript" : "ls -lrt\nexport REG=\"http://indy.indy.svc.cluster.local/api/folo/track/${buildContentId}/npm/remote/yarnpkg/\"\nsed -i \"s#https://registry.npmjs.org/#${REG}#g\" ui/package-lock.json\nsed -i 's#https:#http:#g' ui/package-lock.json\n#sed -i \"s#https://registry.yarnpkg.com/#${REG}#g\" ui/package-lock.json\n\n\nmvn -B install -pl '!docs, !docs/rest-api' \\\n    dependency:tree \\\n    -DskipTests \\\n    -Dtar.long.file.mode=posix \\\n    -Dproxy-server=$REG \\\n    -Dcustom-registry=$REG \\\n    -DnpmRegistryURL2=$REG \\\n    -Dyarn-insecure \\\n    -DyarnRegistry=$REG \\\n    -Dproxy-user=\"${buildContentId}+tracking\" \\\n    -Dproxy-password=\"${accessToken}\" \\\n    -Dproxy-port=\"${proxyPort}\" \\\n    -DyarnDownloadRoot=http://download.eng.bos.redhat.com/rcm-guest/staging/integration/service-registry-dev/dist/yarn/ \\\n    -DnodeDownloadRoot=http://download.eng.bos.redhat.com/rcm-guest/staging/integration/service-registry-dev/dist/node/ \\\n    -DnpmDownloadRoot=http://download-node-02.eng.bos.redhat.com/rcm-guest/staging/fuse/npm/dist/npm/ \\\n    -Pwith-proxy \\\n    -Pwith-custom-registry \\\n    -Pverbose \\\n    -Pprod \\\n    -Pkafkasql \\\n    -Psql",
+          "scmRevision" : "2.3.x-redhat",
+          "creationTime" : 1678172312.164000000,
+          "modificationTime" : 1678172312.163000000,
+          "buildType" : "MVN",
+          "defaultAlignmentParams" : "-DdependencySource=REST -DrepoRemovalBackup=repositories-backup.xml -DversionSuffixStrip= -DreportNonAligned=true -DstrictPropertyValidation=true",
+          "brewPullActive" : false
+        },
+        "8449" : {
+          "id" : "8449",
+          "name" : "service-registry-2.3.0.Final.DR1",
+          "description" : null,
+          "buildScript" : "ls -lrt\nexport REG=\"http://indy.indy.svc.cluster.local/api/folo/track/${buildContentId}/npm/remote/yarnpkg/\"\nsed -i \"s#https://registry.npmjs.org/#${REG}#g\" ui/package-lock.json\nsed -i 's#https:#http:#g' ui/package-lock.json\n#sed -i \"s#https://registry.yarnpkg.com/#${REG}#g\" ui/package-lock.json\n\n\nmvn -B install -pl '!docs, !docs/rest-api' \\\n    dependency:tree \\\n    -DskipTests \\\n    -Dtar.long.file.mode=posix \\\n    -Dproxy-server=$REG \\\n    -Dcustom-registry=$REG \\\n    -DnpmRegistryURL2=$REG \\\n    -Dyarn-insecure \\\n    -DyarnRegistry=$REG \\\n    -Dproxy-user=\"${buildContentId}+tracking\" \\\n    -Dproxy-password=\"${accessToken}\" \\\n    -Dproxy-port=\"${proxyPort}\" \\\n    -DyarnDownloadRoot=http://download.eng.bos.redhat.com/rcm-guest/staging/integration/service-registry-dev/dist/yarn/ \\\n    -DnodeDownloadRoot=http://download.eng.bos.redhat.com/rcm-guest/staging/integration/service-registry-dev/dist/node/ \\\n    -DnpmDownloadRoot=http://download-node-02.eng.bos.redhat.com/rcm-guest/staging/fuse/npm/dist/npm/ \\\n    -Pwith-proxy \\\n    -Pwith-custom-registry \\\n    -Pverbose \\\n    -Pprod \\\n    -Pkafkasql \\\n    -Psql",
+          "scmRevision" : "2.3.x-redhat",
+          "creationTime" : 1663314935.727000000,
+          "modificationTime" : 1663314935.725000000,
+          "buildType" : "MVN",
+          "defaultAlignmentParams" : "-DdependencySource=REST -DrepoRemovalBackup=repositories-backup.xml -DversionSuffixStrip= -DreportNonAligned=true -DstrictPropertyValidation=true",
+          "brewPullActive" : false
+        },
+        "9714" : {
+          "id" : "9714",
+          "name" : "service-registry-2.3.3inal.DR1",
+          "description" : null,
+          "buildScript" : "ls -lrt\nexport REG=\"http://indy.indy.svc.cluster.local/api/folo/track/${buildContentId}/npm/remote/yarnpkg/\"\nsed -i \"s#https://registry.npmjs.org/#${REG}#g\" ui/package-lock.json\nsed -i 's#https:#http:#g' ui/package-lock.json\n#sed -i \"s#https://registry.yarnpkg.com/#${REG}#g\" ui/package-lock.json\n\n\nmvn -B install -pl '!docs, !docs/rest-api' \\\n    dependency:tree \\\n    -DskipTests \\\n    -Dtar.long.file.mode=posix \\\n    -Dproxy-server=$REG \\\n    -Dcustom-registry=$REG \\\n    -DnpmRegistryURL2=$REG \\\n    -Dyarn-insecure \\\n    -DyarnRegistry=$REG \\\n    -Dproxy-user=\"${buildContentId}+tracking\" \\\n    -Dproxy-password=\"${accessToken}\" \\\n    -Dproxy-port=\"${proxyPort}\" \\\n    -DyarnDownloadRoot=http://download.eng.bos.redhat.com/rcm-guest/staging/integration/service-registry-dev/dist/yarn/ \\\n    -DnodeDownloadRoot=http://download.eng.bos.redhat.com/rcm-guest/staging/integration/service-registry-dev/dist/node/ \\\n    -DnpmDownloadRoot=http://download-node-02.eng.bos.redhat.com/rcm-guest/staging/fuse/npm/dist/npm/ \\\n    -Pwith-proxy \\\n    -Pwith-custom-registry \\\n    -Pverbose \\\n    -Pprod \\\n    -Pkafkasql \\\n    -Psql",
+          "scmRevision" : "2.3.x-redhat",
+          "creationTime" : 1678171318.645000000,
+          "modificationTime" : 1678171318.643000000,
+          "buildType" : "MVN",
+          "defaultAlignmentParams" : "-DdependencySource=REST -DrepoRemovalBackup=repositories-backup.xml -DversionSuffixStrip= -DreportNonAligned=true -DstrictPropertyValidation=true",
+          "brewPullActive" : false
+        }
+      }
+    },
+    "buildConfigs" : [ {
+      "newConfig" : {
+        "name" : "service-registry-2.3.3.Final.CR1",
+        "project" : "service-registry",
+        "buildScript" : "ls -lrt\nexport REG=\"http://indy.indy.svc.cluster.local/api/folo/track/${buildContentId}/npm/remote/yarnpkg/\"\nsed -i \"s#https://registry.npmjs.org/#${REG}#g\" ui/package-lock.json\nsed -i 's#https:#http:#g' ui/package-lock.json\n#sed -i \"s#https://registry.yarnpkg.com/#${REG}#g\" ui/package-lock.json\n\n\nmvn -B install -pl '!docs, !docs/rest-api' \\\n    dependency:tree \\\n    -DskipTests \\\n    -Dtar.long.file.mode=posix \\\n    -Dproxy-server=$REG \\\n    -Dcustom-registry=$REG \\\n    -DnpmRegistryURL2=$REG \\\n    -Dyarn-insecure \\\n    -DyarnRegistry=$REG \\\n    -Dproxy-user=\"${buildContentId}+tracking\" \\\n    -Dproxy-password=\"${accessToken}\" \\\n    -Dproxy-port=\"${proxyPort}\" \\\n    -DyarnDownloadRoot=http://download.eng.bos.redhat.com/rcm-guest/staging/integration/service-registry-dev/dist/yarn/ \\\n    -DnodeDownloadRoot=http://download.eng.bos.redhat.com/rcm-guest/staging/integration/service-registry-dev/dist/node/ \\\n    -DnpmDownloadRoot=http://download-node-02.eng.bos.redhat.com/rcm-guest/staging/fuse/npm/dist/npm/ \\\n    -Pwith-proxy \\\n    -Pwith-custom-registry \\\n    -Pverbose \\\n    -Pprod \\\n    -Pkafkasql \\\n    -Psql",
+        "scmUrl" : "git+ssh://code.engineering.redhat.com/redhat-integration/apicurio-registry.git",
+        "scmRevision" : "2.3.x-redhat",
+        "buildPodMemory" : 6.0,
+        "alignmentParameters" : [ "-DgroovyScripts=https://gitlab.cee.redhat.com/service-registry/srs-ci-tools/-/raw/pnc-rhi-service-registry/pme-scripts/GenericManipulations.groovy,https://gitlab.cee.redhat.com/service-registry/srs-ci-tools/-/raw/pnc-rhi-service-registry/pme-scripts/Exclusions.groovy", "-DversionOverride=2.3.3.Final", "-DstrictPropertyValidation=false", "-DdependencyOverride.io.confluent:kafka-schema-registry-client@*=7.3.0", "-DdependencyOverride.org.yaml:snakeyaml@*=1.33.0.redhat-00001" ],
+        "extraRepositories" : [ "https://packages.confluent.io/maven/" ],
+        "brewPullActive" : false,
+        "buildType" : "MVN",
+        "buildCategory" : "STANDARD"
+      },
+      "id" : "9720",
+      "oldConfig" : {
+        "id" : "9720",
+        "name" : "service-registry-2.3.3.Final.CR1",
+        "description" : null,
+        "buildScript" : "ls -lrt\nexport REG=\"http://indy.indy.svc.cluster.local/api/folo/track/${buildContentId}/npm/remote/yarnpkg/\"\nsed -i \"s#https://registry.npmjs.org/#${REG}#g\" ui/package-lock.json\nsed -i 's#https:#http:#g' ui/package-lock.json\n#sed -i \"s#https://registry.yarnpkg.com/#${REG}#g\" ui/package-lock.json\n\n\nmvn -B deploy -pl '!docs, !docs/rest-api' \\\n    dependency:tree \\\n    -DskipTests \\\n    -Dtar.long.file.mode=posix \\\n    -Dproxy-server=$REG \\\n    -Dcustom-registry=$REG \\\n    -DnpmRegistryURL2=$REG \\\n    -Dyarn-insecure \\\n    -DyarnRegistry=$REG \\\n    -Dproxy-user=\"${buildContentId}+tracking\" \\\n    -Dproxy-password=\"${accessToken}\" \\\n    -Dproxy-port=\"${proxyPort}\" \\\n    -DyarnDownloadRoot=http://download.eng.bos.redhat.com/rcm-guest/staging/integration/service-registry-dev/dist/yarn/ \\\n    -DnodeDownloadRoot=http://download.eng.bos.redhat.com/rcm-guest/staging/integration/service-registry-dev/dist/node/ \\\n    -DnpmDownloadRoot=http://download-node-02.eng.bos.redhat.com/rcm-guest/staging/fuse/npm/dist/npm/ \\\n    -Pwith-proxy \\\n    -Pwith-custom-registry \\\n    -Pverbose \\\n    -Pprod \\\n    -Pkafkasql \\\n    -Psql",
+        "scmRevision" : "2.3.x-redhat",
+        "creationTime" : 1678177676.937000000,
+        "modificationTime" : 1678177676.936000000,
+        "buildType" : "MVN",
+        "defaultAlignmentParams" : "-DdependencySource=REST -DrepoRemovalBackup=repositories-backup.xml -DversionSuffixStrip= -DreportNonAligned=true -DstrictPropertyValidation=true",
+        "brewPullActive" : false,
+        "scmRepository" : {
+          "id" : "891",
+          "internalUrl" : "git+ssh://code.engineering.redhat.com/redhat-integration/apicurio-registry.git",
+          "externalUrl" : "git@github.com:redhat-integration/apicurio-registry.git",
+          "preBuildSyncEnabled" : true
+        },
+        "project" : {
+          "id" : "882",
+          "name" : "service-registry",
+          "description" : null,
+          "issueTrackerUrl" : null,
+          "projectUrl" : null,
+          "engineeringTeam" : null,
+          "technicalLeader" : null
+        },
+        "environment" : {
+          "id" : "425",
+          "name" : "OpenJDK 11.0; RHEL 8; Mvn 3.6.3; gcc-cpp; make",
+          "description" : "OpenJDK 11.0; RHEL 8; Mvn 3.6.3; gcc-cpp; make [builder-rhel-8-j11-mvn3.6.3-gcc-cpp-make:1.0.4]",
+          "systemImageRepositoryUrl" : "quay.io/rh-newcastle",
+          "systemImageId" : "builder-rhel-8-j11-mvn3.6.3-gcc-cpp-make:1.0.4",
+          "attributes" : {
+            "JDK" : "11.0",
+            "MAVEN" : "3.6.3",
+            "OS" : "Linux"
+          },
+          "systemImageType" : "DOCKER_IMAGE",
+          "deprecated" : true,
+          "hidden" : false
+        },
+        "dependencies" : { },
+        "productVersion" : {
+          "id" : "375",
+          "version" : "2.3",
+          "attributes" : {
+            "BREW_TAG_PREFIX" : "rhisr-2.3-pnc"
+          }
+        },
+        "groupConfigs" : {
+          "1540" : {
+            "id" : "1540",
+            "name" : "RHISR-2.3.3.CR1"
+          }
+        },
+        "parameters" : {
+          "EXTRA_REPOSITORIES" : "https://packages.confluent.io/maven/",
+          "BUILDER_POD_MEMORY" : "6.0",
+          "BUILD_CATEGORY" : "STANDARD",
+          "ALIGNMENT_PARAMETERS" : "-DgroovyScripts=https://gitlab.cee.redhat.com/service-registry/srs-ci-tools/-/raw/pnc-rhi-service-registry/pme-scripts/GenericManipulations.groovy,https://gitlab.cee.redhat.com/service-registry/srs-ci-tools/-/raw/pnc-rhi-service-registry/pme-scripts/Exclusions.groovy -DversionOverride=2.3.3.Final -DstrictPropertyValidation=false -DdependencyOverride.io.confluent:kafka-schema-registry-client@*=7.3.0 -DdependencyOverride.org.yaml:snakeyaml@*=1.33.0.redhat-00001"
+        },
+        "creationUser" : {
+          "id" : "953",
+          "username" : "service-account-rhi-service-registry-ci"
+        },
+        "modificationUser" : {
+          "id" : "953",
+          "username" : "service-account-rhi-service-registry-ci"
+        }
+      },
+      "modified" : false
+    } ]
+  },
+  "builds" : {
+    "service-registry-2.3.3.Final.CR1" : {
+      "internalScmUrl" : "git+ssh://code.engineering.redhat.com/redhat-integration/apicurio-registry.git",
+      "scmRevision" : "59b9b87ad02e6d918ad0c03477f3831d527c8e9b",
+      "scmTag" : "2.3.3.Final-redhat-00001-59b9b87a",
+      "id" : "AXLTEIEHOSYAA",
+      "name" : "service-registry-2.3.3.Final.CR1",
+      "attributes" : {
+        "BREW_BUILD_VERSION" : "2.3.3.Final-redhat-00001",
+        "BUILD_OUTPUT_OK" : "false",
+        "BREW_BUILD_NAME" : "io.apicurio:apicurio-registry"
+      },
+      "buildStatus" : "SUCCESS",
+      "builtArtifacts" : [ {
+        "id" : "9897563",
+        "gapv" : "io.apicurio:apicurio-registry-utils-import-export:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-utils-import-export-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-import-export/2.3.3.Final-redhat-00001/apicurio-registry-utils-import-export-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "914c6edbc259e3ed37c8a5ec22195792",
+        "sha1" : "ae1110182a4a8e85a6c100bff837c857c1720b84",
+        "sha256" : "ede9f07e1db10fce0100ef0ad4e602ac3a716c34945d91e90376b617d6db9801",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897564",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-asyncapi:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-schema-util-asyncapi-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-asyncapi/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-asyncapi-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "db81e91ebb15d5ad6dd0d07380551c19",
+        "sha1" : "e0cbb5e055b057f1c3f5e1ca7b1cea782ae01b76",
+        "sha256" : "bb487bfaddfe6db570caf62ffc4e366c49635b55323b9b51077b46466db146f1",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897565",
+        "gapv" : "io.apicurio:apicurio-registry-app:zip:2.3.3.Final-redhat-00001:all",
+        "fileName" : "apicurio-registry-app-2.3.3.Final-redhat-00001-all.zip",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-app/2.3.3.Final-redhat-00001/apicurio-registry-app-2.3.3.Final-redhat-00001-all.zip",
+        "md5" : "7a95b599fabd4a7044f7a0e63aeb96c9",
+        "sha1" : "fde0e6e7273a6b16a281d2cae291a86e96a53a44",
+        "sha256" : "0f5b245716da516a8f1f4124ee66791f4d711c8dfb220f7e0877d90bd10ae7fc",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897566",
+        "gapv" : "io.apicurio:apicurio-registry-storage-sql:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-storage-sql-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-storage-sql/2.3.3.Final-redhat-00001/apicurio-registry-storage-sql-2.3.3.Final-redhat-00001.jar",
+        "md5" : "e97b83427e02d7db41ee5ee09c20acee",
+        "sha1" : "1aa98864883bae903c0e3d05ce01a49f58a91c3c",
+        "sha256" : "ad9c451f8655722e9f0054e9bbf2d84e9c858e2598da996b17c1757efb188f45",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897567",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-protobuf:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-protobuf-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-protobuf/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-protobuf-2.3.3.Final-redhat-00001.jar",
+        "md5" : "384207d57df18076e9e87e22612a8b50",
+        "sha1" : "8918c068f607355a41d55898f87e3471bda924b7",
+        "sha256" : "2548e6c3e6fdf809d233cd860c1325c8a0ba80c7a55348ac7db3d0137ad71dd1",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897568",
+        "gapv" : "io.apicurio:apicurio-registry-tenant-manager-client:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-tenant-manager-client-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-tenant-manager-client/2.3.3.Final-redhat-00001/apicurio-registry-tenant-manager-client-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "df87431dc8d7cc7e80bd01bf92bd1fa7",
+        "sha1" : "677b7fa04f79f715d62472e76b084d84179c74b1",
+        "sha256" : "cc354d35f023e3e90c5ff4bac3fbed58756ad9ee4d6e45bc69c0dedafba0f6b2",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897569",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-kconnect:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-kconnect-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-kconnect/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-kconnect-2.3.3.Final-redhat-00001.pom",
+        "md5" : "f6838400f3c549a3b72b5d9918e29ef2",
+        "sha1" : "e2a3cb9fbbab25f9159f1aee0835eaade3893431",
+        "sha256" : "3b656861f8d737d10f1e635f8218e121fba791561c5c32efc36b37369dc2779b",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897570",
+        "gapv" : "io.apicurio:apicurio-registry-storage-kafkasql:jar:2.3.3.Final-redhat-00001:tests",
+        "fileName" : "apicurio-registry-storage-kafkasql-2.3.3.Final-redhat-00001-tests.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-storage-kafkasql/2.3.3.Final-redhat-00001/apicurio-registry-storage-kafkasql-2.3.3.Final-redhat-00001-tests.jar",
+        "md5" : "11d14669bfe970f69fd028e33b81219d",
+        "sha1" : "d5ab4650dfafcbbc55df0bb9269c26df8fa13774",
+        "sha256" : "b1e07c4c50a102ab65c9f62acbd6116d76f719cf4301193d456f0c5568bf4814",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897571",
+        "gapv" : "io.apicurio:apicurio-registry-ui:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-ui-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-ui/2.3.3.Final-redhat-00001/apicurio-registry-ui-2.3.3.Final-redhat-00001.jar",
+        "md5" : "6a49017769192ae7949719976a845ad0",
+        "sha1" : "60ffa1c60df885a99e56902196f1f76600bec845",
+        "sha256" : "94a53936893aa40bb5ff1279e08a785b060b248ff6debda3400d78d3f65dca22",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897572",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-asyncapi:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-asyncapi-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-asyncapi/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-asyncapi-2.3.3.Final-redhat-00001.pom",
+        "md5" : "04a9ebe9bebd9b34728fee92ce08b4d3",
+        "sha1" : "96fb139c6032077ff959987f728f2da1e5270091",
+        "sha256" : "68c1c25c0bfc4110200f149da701b94b633b651dfbc413df21463d077479619a",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897573",
+        "gapv" : "io.apicurio:apicurio-registry-protobuf-schema-utilities:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-protobuf-schema-utilities-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-protobuf-schema-utilities/2.3.3.Final-redhat-00001/apicurio-registry-protobuf-schema-utilities-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "e3e79f02fb130239e69adbb33a0db56c",
+        "sha1" : "248c47b25f61e06cc0dc748b7b4c62254cfcf648",
+        "sha256" : "3263be374e8e4807981b28ea941977f838cad2351e46de56bad19ab20674390a",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897574",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-kconnect:jar:2.3.3.Final-redhat-00001:tests",
+        "fileName" : "apicurio-registry-schema-util-kconnect-2.3.3.Final-redhat-00001-tests.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-kconnect/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-kconnect-2.3.3.Final-redhat-00001-tests.jar",
+        "md5" : "c77ffcf241c20582cfb74159fa67f4f7",
+        "sha1" : "88e94bc0a3b05aa564ccd3230fb9287aa097dad7",
+        "sha256" : "91b46900a24770e5b303fb65edbe27010b6c4e6bb3c49cdc2078eba7d77d1cf2",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897575",
+        "gapv" : "io.apicurio:apicurio-registry-serde-common:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-serde-common-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-serde-common/2.3.3.Final-redhat-00001/apicurio-registry-serde-common-2.3.3.Final-redhat-00001.jar",
+        "md5" : "b32fe67d5951b69d15a065453404375d",
+        "sha1" : "8908b6ab0cb74952d27a6c3ef1999b8d84fe164c",
+        "sha256" : "848a7915905c1babc9b515d66ab8558ccfe1a6d0cf6c4e14444a449e3d7f6296",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897576",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-avro:jar:2.3.3.Final-redhat-00001:tests",
+        "fileName" : "apicurio-registry-schema-util-avro-2.3.3.Final-redhat-00001-tests.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-avro/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-avro-2.3.3.Final-redhat-00001-tests.jar",
+        "md5" : "9bafc941a7174c016d99175ea1e2ffa8",
+        "sha1" : "2e4676640f69d890765446e1cc0fcf3425ee6526",
+        "sha256" : "f6d7421c17506c5ce16552876613ae16d10aeafdff3f2a5d591e4b0e4bf48e84",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897577",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-wsdl:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-schema-util-wsdl-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-wsdl/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-wsdl-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "7dd91b02a3619b56517664c992f8c3a7",
+        "sha1" : "5f2b04596bd1843099bf7e0596af3cc5fa5c38d9",
+        "sha256" : "3d544ef46df2cb61238d12a1b0b7c27758f580e79fed31c5071469b965e93992",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897578",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-json:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-schema-util-json-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-json/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-json-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "b3b1eab8fd8558e9a3982f1b992b82fb",
+        "sha1" : "2996e4351c78d4fccfed46ad37841498e2d97c6b",
+        "sha256" : "65c6adf17dd5dfdccecb02fa1338a0b82fba406b36d8ddeab809f11239159ec5",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897579",
+        "gapv" : "io.apicurio:apicurio-registry-distro-connect-converter:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-distro-connect-converter-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-distro-connect-converter/2.3.3.Final-redhat-00001/apicurio-registry-distro-connect-converter-2.3.3.Final-redhat-00001.pom",
+        "md5" : "75e101dcaca4084c2c9e10776b61ca87",
+        "sha1" : "f89790fde476afe7c4c860845bfb3a1b62ae0a4e",
+        "sha256" : "6bc4623c89f06f87ff5dc584cb92821af6a5532ad9c77ae6e02f839c44fbb038",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897580",
+        "gapv" : "io.apicurio:apicurio-registry-distro:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-distro-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-distro/2.3.3.Final-redhat-00001/apicurio-registry-distro-2.3.3.Final-redhat-00001.pom",
+        "md5" : "b950af3460d986803a5ec6320b2c7b6a",
+        "sha1" : "d4e7cb18cbe7f9525515e6555356bd3c9239f1d1",
+        "sha256" : "09152692ab8b44c8f74c471cd2d0895097d5a4acf24a11cad6b7ec276f293676",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897581",
+        "gapv" : "io.apicurio:apicurio-registry-utils-import-export:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-utils-import-export-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-import-export/2.3.3.Final-redhat-00001/apicurio-registry-utils-import-export-2.3.3.Final-redhat-00001.jar",
+        "md5" : "91dcab7caaed086cd4bcf10953b16b3c",
+        "sha1" : "0eb4ca78c90eb5734d5904f59b8431511e392b23",
+        "sha256" : "4f9bf68b47185e92ff1bd8b3302da706d0e94be9ace2bfb625e5cb7a18532ddb",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897582",
+        "gapv" : "io.apicurio:apicurio-registry-common:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-common-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-common/2.3.3.Final-redhat-00001/apicurio-registry-common-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "7fc11258d5c2f636b82840f35aec920e",
+        "sha1" : "6cad9baceb6979eb1220b4a61f6be66573befc3c",
+        "sha256" : "f70f7897162a4f7d96682ef22dde5747dd9d1fbeba786341d10a34f84d00d1ad",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897583",
+        "gapv" : "io.apicurio:apicurio-registry-tenant-manager-client:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-tenant-manager-client-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-tenant-manager-client/2.3.3.Final-redhat-00001/apicurio-registry-tenant-manager-client-2.3.3.Final-redhat-00001.jar",
+        "md5" : "16f7ed0f4a63fab1cca5f33e935bc59b",
+        "sha1" : "ff639e09962e401bc4e7210a37c2ff9a1a73c30e",
+        "sha256" : "7f8abd3f1a6d2f074c8e7da486be7fba6737b3b24a845dfe74a652b3514dfca3",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897584",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-common:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-schema-util-common-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-common/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-common-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "f23b17c45663652151a16f526632fe54",
+        "sha1" : "25ef8be375ab240ef7e95f4bec46f641504270f4",
+        "sha256" : "a70e832f3fb69fa5a4d815167afd60cd9d37b7982d4b8842cdec8b2ce4ab5e1d",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897585",
+        "gapv" : "io.apicurio:apicurio-registry-utils-import-export:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-utils-import-export-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-import-export/2.3.3.Final-redhat-00001/apicurio-registry-utils-import-export-2.3.3.Final-redhat-00001.pom",
+        "md5" : "a37c2a6baff849c47ecc0605efe2a41e",
+        "sha1" : "8cb40847c70081e3f9af75473dbddf20dd526d6e",
+        "sha256" : "0f80423583230007b67a8ad98d0d26a5433bddd1249dce1366246580c364bb4b",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897586",
+        "gapv" : "io.apicurio:apicurio-registry-utils-exportV1:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-utils-exportV1-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-exportV1/2.3.3.Final-redhat-00001/apicurio-registry-utils-exportV1-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "171a313d36257845379bbb5b2c658bb9",
+        "sha1" : "680e3660fbac45622d1eb0fcdf2879b189c0c109",
+        "sha256" : "5dbc13d871993a8f2f2bacdedd0074069b902937ecff9ce80c4eddef6d761748",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897587",
+        "gapv" : "io.apicurio:apicurio-registry-tenant-manager-client:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-tenant-manager-client-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-tenant-manager-client/2.3.3.Final-redhat-00001/apicurio-registry-tenant-manager-client-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "cd5405a9a5906491c3fe9d575ae3e72d",
+        "sha1" : "fececa2c072cb9ffd72def2a9ba517f21c741886",
+        "sha256" : "95f563955dd1e043721c8399da1fec4491d51544f82aba077b8cb24cc860630d",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897588",
+        "gapv" : "io.apicurio:apicurio-registry-utils-exportConfluent:jar:2.3.3.Final-redhat-00001:runner",
+        "fileName" : "apicurio-registry-utils-exportConfluent-2.3.3.Final-redhat-00001-runner.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-exportConfluent/2.3.3.Final-redhat-00001/apicurio-registry-utils-exportConfluent-2.3.3.Final-redhat-00001-runner.jar",
+        "md5" : "19b49d987142090bde60bd5c8e8b0b31",
+        "sha1" : "889995d92375d6b961621146e694f55852ea18e9",
+        "sha256" : "d1fc75b16a5c2153b29d9293a96de0fd8b6fcf3ddae35b5b8ff6399dd4260f15",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897589",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-openapi:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-openapi-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-openapi/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-openapi-2.3.3.Final-redhat-00001.jar",
+        "md5" : "70e5b83a66caf48f814e276b77b731bd",
+        "sha1" : "f582fcb1851e1a53b135c1492a9e91cac1e5a699",
+        "sha256" : "42de101d333e01008959b60b3d51ef5897dccf04683d602949b9e32d068cb45c",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897590",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-protobuf:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-schema-util-protobuf-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-protobuf/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-protobuf-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "68a8d4b16bbe87027574959d3371bada",
+        "sha1" : "b499555de235e1395cb4ceafa54e05b60fe37798",
+        "sha256" : "752f3e3ba5f02716b7f4f85216564a882821e70a643f6113692aaa4dfc45acf3",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897591",
+        "gapv" : "io.apicurio:apicurio-registry-utils-kafka:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-utils-kafka-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-kafka/2.3.3.Final-redhat-00001/apicurio-registry-utils-kafka-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "740192445b7c1ced8549e7aac97bfb2c",
+        "sha1" : "41126d6c0072eaf3fe2cc3f1cea4eaf2a0daa310",
+        "sha256" : "4a93cd31b74de784c323a8cb6e7ab22047e790d614489c00e2f2969537811756",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897592",
+        "gapv" : "io.apicurio:apicurio-registry-schema-resolver:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-schema-resolver-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-resolver/2.3.3.Final-redhat-00001/apicurio-registry-schema-resolver-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "052201d4cfe68185719b96136e77f3a0",
+        "sha1" : "9c61590a4ac096b8f0b4df9d81889cc6a7c92db9",
+        "sha256" : "79f2dbff636a4225896cac0d5aae4823a981dde86777444039dd7692b38ac913",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897593",
+        "gapv" : "io.apicurio:apicurio-registry-utils-kafka:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-utils-kafka-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-kafka/2.3.3.Final-redhat-00001/apicurio-registry-utils-kafka-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "fe491f17f931dd7979607c65b845e7ec",
+        "sha1" : "98a13efec71f37d1b5038dd879a69e8135bbee73",
+        "sha256" : "89e0541de774efded1afeca6f8cc663dc4b90cb98d7382fa0084ccd46df611e2",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897594",
+        "gapv" : "io.apicurio:apicurio-registry-schema-resolver:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-schema-resolver-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-resolver/2.3.3.Final-redhat-00001/apicurio-registry-schema-resolver-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "21e580b0c4dfd0a530881ef510561927",
+        "sha1" : "fbf27bb2cd786074f5e7b159ce117052dffed17f",
+        "sha256" : "df8ab0a586d7730317bcdea21aff76a2b96e8363e5468554e87806b53bc054ae",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897595",
+        "gapv" : "io.apicurio:apicurio-registry:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry/2.3.3.Final-redhat-00001/apicurio-registry-2.3.3.Final-redhat-00001.pom",
+        "md5" : "e97c49ae1dc20b776d39440b0d8bfe1a",
+        "sha1" : "f5896a9c22d1c062a73c8649450e81e51e65beb6",
+        "sha256" : "e4b1db1100c79351524b4324de535d6cd4425235ac8b3ee737d2f8185ac7bf03",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897596",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-graphql:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-graphql-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-graphql/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-graphql-2.3.3.Final-redhat-00001.jar",
+        "md5" : "7c89443186b278e6e91e940ccb6cea06",
+        "sha1" : "3026f8742ad420224181ac84851d6179900c0772",
+        "sha256" : "6d5fffea3aacf5f69b31613a318cb04d104bee6e6488a3943a3e761b546dadbd",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897597",
+        "gapv" : "io.apicurio:apicurio-registry-storage-sql:zip:2.3.3.Final-redhat-00001:all",
+        "fileName" : "apicurio-registry-storage-sql-2.3.3.Final-redhat-00001-all.zip",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-storage-sql/2.3.3.Final-redhat-00001/apicurio-registry-storage-sql-2.3.3.Final-redhat-00001-all.zip",
+        "md5" : "c9765428a2d291266f7540e45582b9a3",
+        "sha1" : "9b919708c834961dbce8ba9c17555247b96c25ed",
+        "sha256" : "dbbbe47e95b1ad653b5b08975743f642ea2cde86a38adf227aa99551385aaab7",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897598",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-protobuf:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-protobuf-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-protobuf/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-protobuf-2.3.3.Final-redhat-00001.pom",
+        "md5" : "9ba0089a86f54330317dd3384765261b",
+        "sha1" : "2cdd404245f5e5206e03a487e11496971b717d5d",
+        "sha256" : "50ff4c91dfd23c698d30404e6e2c1ad8c1d8ebbb61f357d96197ebb3e13f326b",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897599",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-kconnect:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-kconnect-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-kconnect/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-kconnect-2.3.3.Final-redhat-00001.jar",
+        "md5" : "ba26e3f3b399360cf7f8862202aa93a9",
+        "sha1" : "81ede1e70be515f1e34be5d5eafbe802c991ed26",
+        "sha256" : "0b78e1b2058293649372464e7e61916bceefd40fde3e351c546807a271879b14",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897600",
+        "gapv" : "io.apicurio:apicurio-registry-distro-connect-converter:zip:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-distro-connect-converter-2.3.3.Final-redhat-00001.zip",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-distro-connect-converter/2.3.3.Final-redhat-00001/apicurio-registry-distro-connect-converter-2.3.3.Final-redhat-00001.zip",
+        "md5" : "677f9a3ecbc0e4002ecd12a93d480807",
+        "sha1" : "d848bd6211217284ae69d6865ef362f6ba0c6743",
+        "sha256" : "202a23bac5b31bc8d91caf7458812a8069e0421ffeb7fb9a3ba84cebbabb411a",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897601",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-graphql:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-schema-util-graphql-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-graphql/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-graphql-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "29cc5382102b17b15d549da6e6f6925a",
+        "sha1" : "9c6a0b79f77b4a2f2852b95e7189c018f38d5e80",
+        "sha256" : "4221652fb1d98dc243849653c8c89f5384b51d4c4e3c93e632ce00d61506eeae",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897602",
+        "gapv" : "io.apicurio:apicurio-registry-serdes-protobuf-serde:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-serdes-protobuf-serde-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-serdes-protobuf-serde/2.3.3.Final-redhat-00001/apicurio-registry-serdes-protobuf-serde-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "b1dc9583238a91df067ec01907005b91",
+        "sha1" : "4f53b2aa162b56b74bf0cb70dee86de6da40d22d",
+        "sha256" : "fc5c06efc767d030213c6893c8e015901505e9185e19be48d64242d767f76ce3",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897603",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-wsdl:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-wsdl-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-wsdl/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-wsdl-2.3.3.Final-redhat-00001.pom",
+        "md5" : "60188fc445daa80353f3c1423d5e5f06",
+        "sha1" : "faa95db8ff45d082e5d393211d04c0c73210bed4",
+        "sha256" : "67430c322535b14eca18f4b21b9ff7ed990fb1725e0b06c801c599f2a8d3cb64",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897604",
+        "gapv" : "io.apicurio:apicurio-registry-serde-common:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-serde-common-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-serde-common/2.3.3.Final-redhat-00001/apicurio-registry-serde-common-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "5d27866be77e01c5d288d3cca7373ac0",
+        "sha1" : "12dda48bba26686986797c759292e6f9e7774b16",
+        "sha256" : "51238723b1ba725fb21555acd478150321257e11e5dba816b663abe438d9c4cd",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897605",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-json:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-json-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-json/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-json-2.3.3.Final-redhat-00001.jar",
+        "md5" : "dc24c3e7b44a764cf2d9743630fda746",
+        "sha1" : "b21b18fb918cda499d6f4249c7c7e44e91316105",
+        "sha256" : "45be5e872c6078d379d2d375e9ef24dd0c842066d3a75bd1bd5b6f7498b7e783",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897606",
+        "gapv" : "io.apicurio:apicurio-registry-storage:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-storage-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-storage/2.3.3.Final-redhat-00001/apicurio-registry-storage-2.3.3.Final-redhat-00001.pom",
+        "md5" : "a72ccf035297e2b14b60aef73e352817",
+        "sha1" : "00a9724d447f41f2735d72328561c4d0bcfea283",
+        "sha256" : "f795d94744af4bdf2f154225421d8ec9b2f7cbe899c485a29092cc221f158cda",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897607",
+        "gapv" : "io.apicurio:apicurio-registry-serdes-protobuf-serde:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-serdes-protobuf-serde-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-serdes-protobuf-serde/2.3.3.Final-redhat-00001/apicurio-registry-serdes-protobuf-serde-2.3.3.Final-redhat-00001.pom",
+        "md5" : "a59bbd90f5b906e901eb1aec3062decc",
+        "sha1" : "7c83914da2e7b976ede84c28119998492f7244e6",
+        "sha256" : "56ad6dde3d0aa559259adebff057326e3ae239ef0c06815dc2e956b5b6c715d2",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897608",
+        "gapv" : "io.apicurio:apicurio-registry-app:tar.gz:2.3.3.Final-redhat-00001:all",
+        "fileName" : "apicurio-registry-app-2.3.3.Final-redhat-00001-all.tar.gz",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-app/2.3.3.Final-redhat-00001/apicurio-registry-app-2.3.3.Final-redhat-00001-all.tar.gz",
+        "md5" : "6d7014c8e909078022a88b6397711e37",
+        "sha1" : "e3c88b57b789f774b8e0a0271e01fc99ec029397",
+        "sha256" : "80438a73463f74b5ad8627aa6365666c58d657fab75888fcbcda7165e2c779eb",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897609",
+        "gapv" : "io.apicurio:apicurio-registry-schema-resolver:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-resolver-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-resolver/2.3.3.Final-redhat-00001/apicurio-registry-schema-resolver-2.3.3.Final-redhat-00001.jar",
+        "md5" : "768622a4592041971559c6b2a5859b66",
+        "sha1" : "a4349bf1180792ae80263e0d5c3e7802b285f717",
+        "sha256" : "dfadac4c975948a627fd319e0875bd954783a705f70a373091626de0bf920a6f",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897610",
+        "gapv" : "io.apicurio:apicurio-registry-protobuf-schema-utilities:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-protobuf-schema-utilities-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-protobuf-schema-utilities/2.3.3.Final-redhat-00001/apicurio-registry-protobuf-schema-utilities-2.3.3.Final-redhat-00001.jar",
+        "md5" : "0df9899637e6bb2a8f3243bbc7d9db60",
+        "sha1" : "4530cb23faa143ac4e5598c3400f8d9b22ed7a10",
+        "sha256" : "754c409920f541898f816f7e95ec9b80dbc0aeae04f8f24401a56ca63a5e5402",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897611",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-avro:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-schema-util-avro-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-avro/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-avro-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "7192b34bb2bf0a839683f53b71702c29",
+        "sha1" : "2d7d8b80ae45ae4461d7b3eaf977123a9560f317",
+        "sha256" : "96ab368cdafc0fc9708453af5836839a60eab5897258e9daae8c41cd9a417ea5",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897612",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-xml:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-xml-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-xml/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-xml-2.3.3.Final-redhat-00001.pom",
+        "md5" : "c4b30abf96843a580a3198b3f25e4a7e",
+        "sha1" : "1156d47935785f8cfe27a487302a8f06fd89a187",
+        "sha256" : "b6f34fac839324ffe384a3f1f01a8e72e89d4442ba397fab268bce9ae6b6d5e5",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897613",
+        "gapv" : "io.apicurio:apicurio-registry-utils-tools:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-utils-tools-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-tools/2.3.3.Final-redhat-00001/apicurio-registry-utils-tools-2.3.3.Final-redhat-00001.jar",
+        "md5" : "9efc2a8ae36980f9bedb3e831ff70759",
+        "sha1" : "a7002e68539c1676dc21dfecaa7ae5627193689e",
+        "sha256" : "0905260bf596799bc705413fd8d533696730731ce2779cce93725b1f93966769",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897614",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-asyncapi:jar:2.3.3.Final-redhat-00001:tests",
+        "fileName" : "apicurio-registry-schema-util-asyncapi-2.3.3.Final-redhat-00001-tests.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-asyncapi/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-asyncapi-2.3.3.Final-redhat-00001-tests.jar",
+        "md5" : "e9e39e3f6fe81caf877637d30c0ecbae",
+        "sha1" : "6381d6347424625578da5aa05e30769cad5bae7e",
+        "sha256" : "165cc329b2945f2d7997cf9a5d844d5f91f64ae67907836778df3c879bd53d33",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897615",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-xsd:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-schema-util-xsd-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-xsd/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-xsd-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "e4b154c829fdffa5f75793ea09412bef",
+        "sha1" : "1551f31cb63359947b65bddc8c774fb55e39d6e3",
+        "sha256" : "863c5a19fc1b7540e76f8725354a2b5eed087f21cc16fbb61e90e4768d1216cc",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897616",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-common:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-schema-util-common-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-common/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-common-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "7b0d56e53dbb7bdd4c696a252408eb0c",
+        "sha1" : "87006c1875087b55e252321968833afd453b34bf",
+        "sha256" : "b4f201f9d49e2fd8ccd2c2a54e01debfd820da4d5293ba7a954c975bb15ebfcb",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897617",
+        "gapv" : "io.apicurio:apicurio-registry-tenant-manager-client:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-tenant-manager-client-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-tenant-manager-client/2.3.3.Final-redhat-00001/apicurio-registry-tenant-manager-client-2.3.3.Final-redhat-00001.pom",
+        "md5" : "e3eb539d0ec97549e421aa0155dcef54",
+        "sha1" : "c2baf275662d19d4a83106f0412d0353783066a5",
+        "sha256" : "69565ab238c13733eb46ec57b5c84a2f18fc623bc4fa6116b31bcca932fcef77",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897618",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-wsdl:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-schema-util-wsdl-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-wsdl/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-wsdl-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "8a07b6350e8c62a4b798251b69fd2390",
+        "sha1" : "9dbdc71e06a98a87104eb2c34cc48624f841edd7",
+        "sha256" : "9c3e089e57a398f0446c11dccf2674a3737f2d39f11ed0016f065342241568ef",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897619",
+        "gapv" : "io.apicurio:apicurio-registry-utils-kafka:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-utils-kafka-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-kafka/2.3.3.Final-redhat-00001/apicurio-registry-utils-kafka-2.3.3.Final-redhat-00001.jar",
+        "md5" : "c7be93f8a2c98e0da6e080b4362bd3b3",
+        "sha1" : "cfab5c09ae333f6ae3fee65dccc80326ff46eed7",
+        "sha256" : "2677f7cd87b8c1a6b1664f14ff153d223c671b4dee845a04e4857ee74828121b",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897620",
+        "gapv" : "io.apicurio:apicurio-registry-storage-sql:jar:2.3.3.Final-redhat-00001:tests",
+        "fileName" : "apicurio-registry-storage-sql-2.3.3.Final-redhat-00001-tests.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-storage-sql/2.3.3.Final-redhat-00001/apicurio-registry-storage-sql-2.3.3.Final-redhat-00001-tests.jar",
+        "md5" : "cb78792404af5b5f59ada70761ab5d15",
+        "sha1" : "1932947c8ebe7d187b4da9b07370e0adccff6a76",
+        "sha256" : "7ed62ec696f19cab74dde48992d3322e9a1ea92fdeedd8ffe0828758e2623077",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897621",
+        "gapv" : "io.apicurio:apicurio-registry-utils-import-export:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-utils-import-export-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-import-export/2.3.3.Final-redhat-00001/apicurio-registry-utils-import-export-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "413c200d5b9a9a9bf7b54c6f5eb8da25",
+        "sha1" : "ea33359462d6fdfb0a7837a839be298101bf393a",
+        "sha256" : "62a430a5bf162fb1247d53e5b634c1f92afb9f1498bf7a93b7f1d96482fb60d8",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897622",
+        "gapv" : "io.apicurio:apicurio-registry-maven-plugin:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-maven-plugin-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-maven-plugin/2.3.3.Final-redhat-00001/apicurio-registry-maven-plugin-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "eb6b0cc095a3eeb890523a59314ac2f5",
+        "sha1" : "bd9e4bf2b1f1dae503a8c9bcb8adc56f03a07ac4",
+        "sha256" : "84132bc72c5ba1bc3a0ad80ac7e401f37d7916679b53594de0316a84610d6e02",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897623",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-avro:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-schema-util-avro-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-avro/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-avro-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "32529b1658b3b2ff6642bcdb5c9ecb4e",
+        "sha1" : "14752beab5226a6dfe971019bbe5189e1dee04c5",
+        "sha256" : "5803a71ffe54d8d59bf6bd891bda35152446ea53e3d39f15475415ca46b773fa",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897624",
+        "gapv" : "io.apicurio:apicurio-registry-utils-tools:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-utils-tools-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-tools/2.3.3.Final-redhat-00001/apicurio-registry-utils-tools-2.3.3.Final-redhat-00001.pom",
+        "md5" : "1a6d49964df116fdc9a060a4f4cb27f6",
+        "sha1" : "05e185b912024b93365ad7318e6989a93df278d7",
+        "sha256" : "22cd0138e8d7ba15ad79998109bcb926a339fe631b1732314ccea2de2f0e6c96",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897625",
+        "gapv" : "io.apicurio:apicurio-registry-serde-common:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-serde-common-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-serde-common/2.3.3.Final-redhat-00001/apicurio-registry-serde-common-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "761af4ef744414e64a896ad62d19de9c",
+        "sha1" : "05c4261a0882b309797d9064dae71ce7a24b48dd",
+        "sha256" : "b9d6f13b30e6e46f97eba4bf9fe88ff8b37de1c28c5ad42ac5a8f60e4eddd9cc",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897626",
+        "gapv" : "io.apicurio:apicurio-registry-client:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-client-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-client/2.3.3.Final-redhat-00001/apicurio-registry-client-2.3.3.Final-redhat-00001.jar",
+        "md5" : "e5e384200a765ece17eb57978fdc422a",
+        "sha1" : "f7ee28ae2bb5c7261680ec7ec515218644283cc2",
+        "sha256" : "9f1f3707089406942ba1644770325fff225c8401cb5778808a119b30a9af6899",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897627",
+        "gapv" : "io.apicurio:apicurio-registry-distro-connect-converter:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-distro-connect-converter-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-distro-connect-converter/2.3.3.Final-redhat-00001/apicurio-registry-distro-connect-converter-2.3.3.Final-redhat-00001.jar",
+        "md5" : "a6f379c1567d677a32e52e7f8ceaf6d7",
+        "sha1" : "db0be9950e1f574c0d1fe1f8f5bde0f4f62166ba",
+        "sha256" : "84e6aacc7672a96a4ef3096faa60ec0abcc189e56c11eb243b8fd145971dead0",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897628",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-xsd:jar:2.3.3.Final-redhat-00001:tests",
+        "fileName" : "apicurio-registry-schema-util-xsd-2.3.3.Final-redhat-00001-tests.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-xsd/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-xsd-2.3.3.Final-redhat-00001-tests.jar",
+        "md5" : "cc380065d010b58aba5ba62efe680531",
+        "sha1" : "31f50dbccb46514359f7b170a28b2c3bf049abab",
+        "sha256" : "47a4ecc6b1e8546598ed0fe2c8bbbe8e21ba83ede1b13ef71e7f8910ed291293",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897629",
+        "gapv" : "io.apicurio:apicurio-registry-storage-sql:tar.gz:2.3.3.Final-redhat-00001:all",
+        "fileName" : "apicurio-registry-storage-sql-2.3.3.Final-redhat-00001-all.tar.gz",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-storage-sql/2.3.3.Final-redhat-00001/apicurio-registry-storage-sql-2.3.3.Final-redhat-00001-all.tar.gz",
+        "md5" : "82df9123c172395e152645cbf75b816b",
+        "sha1" : "3963c5c1228eafff891e20905b01881687164c80",
+        "sha256" : "aecd16be9b79da6c33594e90f02840eb802654d5bf3f4a2a70f7616c0ec0caa3",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897630",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-openapi:jar:2.3.3.Final-redhat-00001:tests",
+        "fileName" : "apicurio-registry-schema-util-openapi-2.3.3.Final-redhat-00001-tests.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-openapi/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-openapi-2.3.3.Final-redhat-00001-tests.jar",
+        "md5" : "dd5aa8e79d029c1292cf77af1449d89a",
+        "sha1" : "f0dd2296bbff800a17964d1c1ac0c6755349574f",
+        "sha256" : "a3ac87b4cb79fec4fbadf601659bc132017e216462e812e912e437b0db9af695",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897631",
+        "gapv" : "io.apicurio:apicurio-registry-maven-plugin:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-maven-plugin-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-maven-plugin/2.3.3.Final-redhat-00001/apicurio-registry-maven-plugin-2.3.3.Final-redhat-00001.pom",
+        "md5" : "a073ff25b48e0d9ccdaebf84b7d0948c",
+        "sha1" : "019df7f7b201a6b2c329817f427b7c7ee35aa133",
+        "sha256" : "277404952cb9776d49448ea305834d4dc42489cf06759b076582d079316b9698",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897632",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-provider:jar:2.3.3.Final-redhat-00001:tests",
+        "fileName" : "apicurio-registry-schema-util-provider-2.3.3.Final-redhat-00001-tests.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-provider/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-provider-2.3.3.Final-redhat-00001-tests.jar",
+        "md5" : "eae066dab591541cda4fd294b5d7acb8",
+        "sha1" : "b77605c6f286a375e62f412098d39a105ce4e14e",
+        "sha256" : "2cd0dacce2f548c970f62d2d81b6b394f86bd0c1009ceb23a889d576354a34b3",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897633",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-common:jar:2.3.3.Final-redhat-00001:tests",
+        "fileName" : "apicurio-registry-schema-util-common-2.3.3.Final-redhat-00001-tests.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-common/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-common-2.3.3.Final-redhat-00001-tests.jar",
+        "md5" : "e9f013067ffbda5d18f4594c79236854",
+        "sha1" : "db95d1761cb30917584566d6d5263c342dc05f71",
+        "sha256" : "2d1a495047ad39a31c0858b0e439d3d44ff0c90c603b4b2bbd936a3b79119e63",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897634",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-asyncapi:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-asyncapi-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-asyncapi/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-asyncapi-2.3.3.Final-redhat-00001.jar",
+        "md5" : "4e54ce2287ff51cd724661fd13e1934b",
+        "sha1" : "a3227642f3b351f7d2b3ec15007ee79bb26045b9",
+        "sha256" : "ccbda2e37ab107da7e1086d083c3d8f171ce3ffb4c532cb8b853a6fee6725309",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897635",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-json:jar:2.3.3.Final-redhat-00001:tests",
+        "fileName" : "apicurio-registry-schema-util-json-2.3.3.Final-redhat-00001-tests.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-json/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-json-2.3.3.Final-redhat-00001-tests.jar",
+        "md5" : "7b25210c9df4096a5684012002908eb5",
+        "sha1" : "9a5fa6f2b4e1d11f4d4dc2a92b84823a02683454",
+        "sha256" : "31edc8f3b13406c48d4e2545b1b30c6dc5d6b6d15b508cc154d2d406c8a60d02",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897636",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-wsdl:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-wsdl-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-wsdl/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-wsdl-2.3.3.Final-redhat-00001.jar",
+        "md5" : "675cc4d3c087521b5044baeecf338a79",
+        "sha1" : "80b9d1a0c70d6c5e68f807001b9412fc7a27ac4c",
+        "sha256" : "09d6427e65e70d7e4e07be84cf93851c7e45bc597806b0cfb7225010172f9ebd",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897637",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-xml:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-schema-util-xml-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-xml/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-xml-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "71c00edf4b1dd58ec772ec41fbce0458",
+        "sha1" : "0dc01c1f64e83b12727046fafa42c6605e083ac9",
+        "sha256" : "ad594f217c1923ccae4955265f6536c9cf6124afb302d1ccacb5d1dd649f9dcd",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897638",
+        "gapv" : "io.apicurio:apicurio-registry-tenant-manager-datamodel:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-tenant-manager-datamodel-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-tenant-manager-datamodel/2.3.3.Final-redhat-00001/apicurio-registry-tenant-manager-datamodel-2.3.3.Final-redhat-00001.pom",
+        "md5" : "aef30360d8870c098909c205e6c92f1b",
+        "sha1" : "1f46a64e4a295ff7502e207511ef18126f4afc08",
+        "sha256" : "2f395fcaa9cf57699717516c00f86e5038071fa3fe94ff99ce7160ad64b31964",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897639",
+        "gapv" : "io.apicurio:apicurio-registry-maven-plugin:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-maven-plugin-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-maven-plugin/2.3.3.Final-redhat-00001/apicurio-registry-maven-plugin-2.3.3.Final-redhat-00001.jar",
+        "md5" : "e466d916e30f1e9fd0c83697b8c707c5",
+        "sha1" : "aea77dfbba568eb5f3460a53020a1b0f41f8802b",
+        "sha256" : "692a2674adcd81564f632bfdc93f2b08a83d44217d58ed4723b10225802db466",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897640",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-xml:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-schema-util-xml-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-xml/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-xml-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "f7fe57210cbe433d56e64321b5c0e61a",
+        "sha1" : "e0b9f908a9b0abe3e89ebb896b6e9d4295bab320",
+        "sha256" : "facb6a72e38c6a79f1bf611bc65226dbfd6065d0ad5d4b4b65a034a8531530eb",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897641",
+        "gapv" : "io.apicurio:apicurio-registry-utils-converter:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-utils-converter-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-converter/2.3.3.Final-redhat-00001/apicurio-registry-utils-converter-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "7b0ea68038f82eb5b361dfbc0fd28458",
+        "sha1" : "c9029ced98e3a033bdb0ab5281e30f7a46c6ee7c",
+        "sha256" : "d3c8bfb35aa2cf69f51072c5f2721973bf161cbc71283382d8d766e9880edca4",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897642",
+        "gapv" : "io.apicurio:apicurio-registry-utils-converter:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-utils-converter-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-converter/2.3.3.Final-redhat-00001/apicurio-registry-utils-converter-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "e19b222351155ea135a83028137e8b29",
+        "sha1" : "66f0708e9249c2e8555903f86e45c7718c502cbd",
+        "sha256" : "76553738abe067351c67dd70e827773fd93b7ee2f499a6718e2e6d7e402d4abe",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897643",
+        "gapv" : "io.apicurio:apicurio-registry-client:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-client-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-client/2.3.3.Final-redhat-00001/apicurio-registry-client-2.3.3.Final-redhat-00001.pom",
+        "md5" : "015baada57005e617d4ba645325ba19b",
+        "sha1" : "1b6b865bb9b7f5d21adb271674dacdaa38947411",
+        "sha256" : "1e248b0f7fedae03e0ea929d222ca66809e2dd35d4ac5277c2102ebc1bff8d69",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897644",
+        "gapv" : "io.apicurio:apicurio-registry-utils-exportConfluent:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-utils-exportConfluent-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-exportConfluent/2.3.3.Final-redhat-00001/apicurio-registry-utils-exportConfluent-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "e81d4a413dd10bed1da5db88d00184ab",
+        "sha1" : "bf827fdc897eadf67aef92f9025366e59a598034",
+        "sha256" : "8aacc589f3c34d06f9265b7ebdc3540cbd4252272d7ae281660c8783160c6836",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897645",
+        "gapv" : "io.apicurio:apicurio-registry-utils-exportConfluent:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-utils-exportConfluent-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-exportConfluent/2.3.3.Final-redhat-00001/apicurio-registry-utils-exportConfluent-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "67aba2f407c5cf6b6b993a58d05e2ec6",
+        "sha1" : "cb37d763e208bea007928d5492f4370ce393752c",
+        "sha256" : "a9f5c31d3507d2f6ccd07c212f63bfc02afd56d45b077c3918a51a0319e37b62",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897646",
+        "gapv" : "io.apicurio:apicurio-registry-serdes-protobuf-serde:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-serdes-protobuf-serde-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-serdes-protobuf-serde/2.3.3.Final-redhat-00001/apicurio-registry-serdes-protobuf-serde-2.3.3.Final-redhat-00001.jar",
+        "md5" : "c2f3ad5abc30624bdfc09b8294279ea9",
+        "sha1" : "c58298d4fee2b7dae7874594ec8f82f2431650b8",
+        "sha256" : "f9d192649988b0e84c2187f5bd420ece12e905017075a96d3a7a1a011f58c0d4",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897647",
+        "gapv" : "io.apicurio:apicurio-registry-utils-kafka:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-utils-kafka-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-kafka/2.3.3.Final-redhat-00001/apicurio-registry-utils-kafka-2.3.3.Final-redhat-00001.pom",
+        "md5" : "4249ce3b6a1ce00bd615be20ab3fc529",
+        "sha1" : "234db290c8b45e3c037f33eaaf83c1a9923b14c9",
+        "sha256" : "30027beb656d49d4c7d97b1af0c2e5f5a3b56f5d7da38fcfdb6e66af96625158",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897648",
+        "gapv" : "io.apicurio:apicurio-registry-client:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-client-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-client/2.3.3.Final-redhat-00001/apicurio-registry-client-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "ef5d9aac605ec469cde0818cdacb11c9",
+        "sha1" : "f07c87bd5bb385319637eb116f4f3283dca2ffc2",
+        "sha256" : "2c24ed4f46c58465f9b705bae701136effe747fca674661e8fff954920d92014",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897649",
+        "gapv" : "io.apicurio:apicurio-registry-utils-exportV1:tar.gz:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-utils-exportV1-2.3.3.Final-redhat-00001.tar.gz",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-exportV1/2.3.3.Final-redhat-00001/apicurio-registry-utils-exportV1-2.3.3.Final-redhat-00001.tar.gz",
+        "md5" : "08fd2f97fea61f9b545a994b34295e47",
+        "sha1" : "880a8ef9bab631757546430b21b078b19b9d76c4",
+        "sha256" : "f0c5b2a3e924e0d223396b5e6a24a0fad5b1e582fbebb54b5cb5a341a4ac615b",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897650",
+        "gapv" : "io.apicurio:apicurio-registry-utils-tests:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-utils-tests-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-tests/2.3.3.Final-redhat-00001/apicurio-registry-utils-tests-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "627cf6c7e536ae446d0260a2db45127b",
+        "sha1" : "c94c72b926f9bce796bdcedaf4a3d31835bad6c7",
+        "sha256" : "0be753e0fdf7cf69bf0af1548a844df69a8b687676892456623d555c7551ac52",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897651",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-xsd:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-schema-util-xsd-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-xsd/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-xsd-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "679acc7b0d04f180e31dc764018feba7",
+        "sha1" : "3363592e2a7520dd869b68d151510fe5fb1edf17",
+        "sha256" : "157ce2a5597b659b01477ff40adc7384527358578f651df75d7a2e24c3e89922",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897652",
+        "gapv" : "io.apicurio:apicurio-registry-utils-exportV1:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-utils-exportV1-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-exportV1/2.3.3.Final-redhat-00001/apicurio-registry-utils-exportV1-2.3.3.Final-redhat-00001.jar",
+        "md5" : "67e5c5281db07cf4676c51d11c6bf7ed",
+        "sha1" : "ef5095a18ce1db176b2e45f84382e38075a62330",
+        "sha256" : "c6859f4d45af3baf88299a1cf4c1d7e2a48fd547b6436a51b4b784027765231f",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897653",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-xml:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-xml-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-xml/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-xml-2.3.3.Final-redhat-00001.jar",
+        "md5" : "a616cb564959b0c68a0f44ca5a3f5590",
+        "sha1" : "fdec0f15b6c2077c0b5042db2875a7f4d1c406c4",
+        "sha256" : "dc47448f30629173a8495f6ab94f1b8313874af3ae14a23ebc7344593aab646b",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897654",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-xml:jar:2.3.3.Final-redhat-00001:tests",
+        "fileName" : "apicurio-registry-schema-util-xml-2.3.3.Final-redhat-00001-tests.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-xml/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-xml-2.3.3.Final-redhat-00001-tests.jar",
+        "md5" : "46a6458544b538b0d87c5b7aac20d7a9",
+        "sha1" : "b462c05a9bb7ea61078d4b36f0d25071ca30b79f",
+        "sha256" : "9138a1297b9c95a6776402619cd2e659a13648c41233444527fc4458f977bff0",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897655",
+        "gapv" : "io.apicurio:apicurio-registry-utils-kafka:jar:2.3.3.Final-redhat-00001:tests",
+        "fileName" : "apicurio-registry-utils-kafka-2.3.3.Final-redhat-00001-tests.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-kafka/2.3.3.Final-redhat-00001/apicurio-registry-utils-kafka-2.3.3.Final-redhat-00001-tests.jar",
+        "md5" : "99812767e68015c4b59101255330e317",
+        "sha1" : "1ac7e55d0148c1541b1e5f6a536e6fcd461b9212",
+        "sha256" : "4dccf51334063ddb45c458f17498e8782914fa6d7cde2228c7839af63be3a74f",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897656",
+        "gapv" : "io.apicurio:apicurio-registry-app:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-app-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-app/2.3.3.Final-redhat-00001/apicurio-registry-app-2.3.3.Final-redhat-00001.pom",
+        "md5" : "645af1b2597f2fd0ce12163c77c9d84e",
+        "sha1" : "fb3f45c68a2ab2cc4c9bae30ad04a8c07ae2a633",
+        "sha256" : "5cbade21696394940474d5c0cbbc047a04db25b55aaf6c517c5e59110bf3ef0c",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897657",
+        "gapv" : "io.apicurio:apicurio-registry-tenant-manager-datamodel:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-tenant-manager-datamodel-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-tenant-manager-datamodel/2.3.3.Final-redhat-00001/apicurio-registry-tenant-manager-datamodel-2.3.3.Final-redhat-00001.jar",
+        "md5" : "f87a55a3006808a0b25a45e17fe232ef",
+        "sha1" : "58a5e1fbf8de4c481d535e950b232465700263ce",
+        "sha256" : "7da3980e6c7ee79b99bbccc6fa2d340b5282cd7838dc1301c57f4982a4518a0a",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897658",
+        "gapv" : "io.apicurio:apicurio-registry-utils-converter:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-utils-converter-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-converter/2.3.3.Final-redhat-00001/apicurio-registry-utils-converter-2.3.3.Final-redhat-00001.pom",
+        "md5" : "ca61bc15aef20adbda33af75bd315876",
+        "sha1" : "e01f1e9fe0b0e38808bf0e76bb7cff8a9140b889",
+        "sha256" : "4a488ddb8f7e855490af2930e495a4dc648998e66b464ab278296a559ef2ed84",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897659",
+        "gapv" : "io.apicurio:apicurio-registry-serdes-avro-serde:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-serdes-avro-serde-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-serdes-avro-serde/2.3.3.Final-redhat-00001/apicurio-registry-serdes-avro-serde-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "579178656cc31405364523ef158bcef7",
+        "sha1" : "f45c6385c232fe0f04ac04e2863f73e420ef1ee8",
+        "sha256" : "512366138739ef3782151ce62648c8ae68a8cfb8827acd3a454f7e826103183d",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897660",
+        "gapv" : "io.apicurio:apicurio-registry-maven-plugin:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-maven-plugin-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-maven-plugin/2.3.3.Final-redhat-00001/apicurio-registry-maven-plugin-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "684ec1e1feab42c49feaf3aab2f14c85",
+        "sha1" : "598f0ef0985734b46141d7b6f05380c29d0a34d8",
+        "sha256" : "6ced4a23e94ed0e5fb943455e1eeb9fb70109566e22cd8bfd12f2ad225a3e453",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897661",
+        "gapv" : "io.apicurio:apicurio-registry-serdes-jsonschema-serde:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-serdes-jsonschema-serde-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-serdes-jsonschema-serde/2.3.3.Final-redhat-00001/apicurio-registry-serdes-jsonschema-serde-2.3.3.Final-redhat-00001.pom",
+        "md5" : "f6880f53022d96c12acf054093ba9e31",
+        "sha1" : "9f87d65abab13c5159e9e1b57163852c046c58ec",
+        "sha256" : "fbe9d6c4ee77397f34e0c2bddf40e8d75e2bcdb431760a9ca15bbda824786cbf",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897662",
+        "gapv" : "io.apicurio:apicurio-registry-protobuf-schema-utilities:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-protobuf-schema-utilities-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-protobuf-schema-utilities/2.3.3.Final-redhat-00001/apicurio-registry-protobuf-schema-utilities-2.3.3.Final-redhat-00001.pom",
+        "md5" : "c1acf78dc0cfba872c097fc1e7461125",
+        "sha1" : "090203d3b6845b244e8d763af1c89036667d1dd1",
+        "sha256" : "5712fbc0072f9e0dd6fc262f33f8cf6a0a4b24650c9f6ebc152f5016b8126c96",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897663",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-json:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-json-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-json/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-json-2.3.3.Final-redhat-00001.pom",
+        "md5" : "536301e2c404db6f744bcea036903e2a",
+        "sha1" : "935d67eec7d9f7a8ab82f5aad2618df54aa5bb6b",
+        "sha256" : "4a61885ffc23095781a3f3513808d7b2f4735e77aafc45b238b6e0b963983103",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897664",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-graphql:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-schema-util-graphql-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-graphql/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-graphql-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "b6bfb9d451c3ded097b7ba44c00b6101",
+        "sha1" : "bae522daa860e0bd559a86b5d215a8961c3130a3",
+        "sha256" : "39a5c010d4bee33d0b30a7a6a9db8e4b02911ed9d765cdbd1e0cfb6b8348d81c",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897665",
+        "gapv" : "io.apicurio:apicurio-registry-utils-tests:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-utils-tests-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-tests/2.3.3.Final-redhat-00001/apicurio-registry-utils-tests-2.3.3.Final-redhat-00001.jar",
+        "md5" : "08b8e362ee7cf7d9469b6586a77bb2f9",
+        "sha1" : "935b91c618a0dcaa37270987a8ef5655528f36f6",
+        "sha256" : "ef9c7d235a6ebab76f4be06ac0711ec28aa98dc3a2567a8dd7a9b536fb6f8585",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897666",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-kconnect:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-schema-util-kconnect-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-kconnect/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-kconnect-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "7a02bedb271d985f9057d42408a53fbf",
+        "sha1" : "6e02bb4cdf9c0e087feb941383a39ad4a6f515c2",
+        "sha256" : "57fe99ef8e21e4b0882223a26f33324284301702249de282af48a4c5d537ab9c",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897667",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-provider:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-provider-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-provider/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-provider-2.3.3.Final-redhat-00001.jar",
+        "md5" : "20e65b005927f4e220ad57383367db73",
+        "sha1" : "9d335d3852803eb64b1d837317f4298f4ecb3fb3",
+        "sha256" : "bab6a259b8c172878f70eeb592fc0c9089ea8c2528771f2d2662ae4e140e773f",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897668",
+        "gapv" : "io.apicurio:apicurio-registry-utils-exportV1:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-utils-exportV1-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-exportV1/2.3.3.Final-redhat-00001/apicurio-registry-utils-exportV1-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "26f81ac782309bcaf6a508ac7ced1dc7",
+        "sha1" : "27942546d3da8c2334da59331747e9ca16663c82",
+        "sha256" : "0e38d70921ea57d4475976bb09bf82fa05522dfc188b2eef7131a757596c5e31",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897669",
+        "gapv" : "io.apicurio:apicurio-registry-utils-exportV1:jar:2.3.3.Final-redhat-00001:runner",
+        "fileName" : "apicurio-registry-utils-exportV1-2.3.3.Final-redhat-00001-runner.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-exportV1/2.3.3.Final-redhat-00001/apicurio-registry-utils-exportV1-2.3.3.Final-redhat-00001-runner.jar",
+        "md5" : "67e5c5281db07cf4676c51d11c6bf7ed",
+        "sha1" : "ef5095a18ce1db176b2e45f84382e38075a62330",
+        "sha256" : "c6859f4d45af3baf88299a1cf4c1d7e2a48fd547b6436a51b4b784027765231f",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897670",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-openapi:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-schema-util-openapi-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-openapi/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-openapi-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "a0771f7c18653aa0c81fb531c50fe979",
+        "sha1" : "00d6890207f9ce4162e7e21912ca7c517b447958",
+        "sha256" : "3115eee73e6d647aec7ebfe6be4b62aaa4b793d727b9fbfda21cab831e328b69",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897671",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-avro:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-avro-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-avro/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-avro-2.3.3.Final-redhat-00001.jar",
+        "md5" : "45fa353ec7cf8b4115a4cf1e5ca33c4a",
+        "sha1" : "a4b707c05ee5e1e766135f8277849504db932784",
+        "sha256" : "bc3d8ad295d1630543bf5ef5eb2ba0b1fd87781ea7a07fd8ebef91b9bbdbb041",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897672",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-common:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-common-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-common/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-common-2.3.3.Final-redhat-00001.pom",
+        "md5" : "b0b6793c89485971d5a0fe5aebdc4385",
+        "sha1" : "033555f9d5dd7a2e9c11b96c780731ba62e3bcba",
+        "sha256" : "254a8f5a85d1da268ab76f8e3ad79e965b2b21d8796ff3610fa951b17c960cc6",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897673",
+        "gapv" : "io.apicurio:apicurio-registry-serdes-avro-serde:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-serdes-avro-serde-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-serdes-avro-serde/2.3.3.Final-redhat-00001/apicurio-registry-serdes-avro-serde-2.3.3.Final-redhat-00001.pom",
+        "md5" : "b314504b0c0d61c3552911c46fa78dc7",
+        "sha1" : "895c0d9131fa0bacc389aa6388be5830a3d3ec31",
+        "sha256" : "9ae2d04be0a3b703894923362389c6a5655dc5e116a092024b7e75dbc53ff710",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897674",
+        "gapv" : "io.apicurio:apicurio-registry-serdes-avro-serde:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-serdes-avro-serde-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-serdes-avro-serde/2.3.3.Final-redhat-00001/apicurio-registry-serdes-avro-serde-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "bcbc44044ff26d8bafcee74a2e214c5f",
+        "sha1" : "c112c5b2538c06269cc554cdf7590bf2f3c433bc",
+        "sha256" : "f0759a7c594d24f4e728454d269c49b7c832338d34c08dfc81d63a4e3d1df858",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897675",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-openapi:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-openapi-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-openapi/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-openapi-2.3.3.Final-redhat-00001.pom",
+        "md5" : "2aa04cfa0ee347df0b346eb535765bab",
+        "sha1" : "a82362a37ea87e704b6ba190dc396e95ff4befa8",
+        "sha256" : "c80688cd0ac6e74aca91765f8a0c19e3a20fb7478d6cd33a7c0d98cdb0ae77fb",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897676",
+        "gapv" : "io.apicurio:apicurio-registry-client:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-client-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-client/2.3.3.Final-redhat-00001/apicurio-registry-client-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "8a4daaceba3733326d67a7ce08a7a1fb",
+        "sha1" : "30203985633d6b83f339801e537da5bce08e9d05",
+        "sha256" : "149efc33eb3efc5f90e076edf794b692a4278c6d45fa32af691cd781941ebac3",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897677",
+        "gapv" : "io.apicurio:apicurio-registry-schema-resolver:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-resolver-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-resolver/2.3.3.Final-redhat-00001/apicurio-registry-schema-resolver-2.3.3.Final-redhat-00001.pom",
+        "md5" : "c24f5bd7e1a175ebeb9a7e9fc60c975c",
+        "sha1" : "7815dae95ce4800f8ef91eaf758c6a053918d667",
+        "sha256" : "84032e7e01a15936e320def4fdb497a2d4f581997bb4a8b75d1688b5b8aa0236",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897678",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-avro:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-avro-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-avro/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-avro-2.3.3.Final-redhat-00001.pom",
+        "md5" : "73850a53250d340abc6d1aafc20bbb7b",
+        "sha1" : "48bb7e22b36811c726937595ce80a001ae13325b",
+        "sha256" : "d7d67a1a838e932c8aa17414765c4fb5293f0f2c2f1a06b092d106c4d921229b",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897679",
+        "gapv" : "io.apicurio:apicurio-registry-serdes-protobuf-serde:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-serdes-protobuf-serde-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-serdes-protobuf-serde/2.3.3.Final-redhat-00001/apicurio-registry-serdes-protobuf-serde-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "76f452cecc469899095d7545d8610e9f",
+        "sha1" : "734dfcc66f68b7d7131bfa3e1651aba4b77c96b5",
+        "sha256" : "e69f38864ca64983fba3d9141fad61b43150832993b893bf8e0ab407d4155c8b",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897680",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-openapi:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-schema-util-openapi-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-openapi/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-openapi-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "721d4e9cb2810c8629605a4781f0e8ca",
+        "sha1" : "9fdc87e419d90f0952776701aba33cfbb7da8c80",
+        "sha256" : "ba391086e31b7f92fdd4e5ba5df8e960d5ac742e571b34ad63431c2f8a3fcc33",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897681",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-graphql:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-graphql-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-graphql/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-graphql-2.3.3.Final-redhat-00001.pom",
+        "md5" : "883a033ab6584c0345161a82d134b76b",
+        "sha1" : "6ab299017a8601f80578babf962b1e807118170d",
+        "sha256" : "7804eacd8b4f55adb938a83117a6572a2291f01d312499290124d9fbf2daf277",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897682",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-protobuf:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-schema-util-protobuf-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-protobuf/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-protobuf-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "8bf46af37b021cbfaa0fa53012458755",
+        "sha1" : "790e8780267140c3966c271e1ae7ffb57833459d",
+        "sha256" : "5745594316f14cd42e26888c49a962cf185644263fca2b2aa8184a418a5bbe0c",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897683",
+        "gapv" : "io.apicurio:apicurio-registry-storage-kafkasql:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-storage-kafkasql-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-storage-kafkasql/2.3.3.Final-redhat-00001/apicurio-registry-storage-kafkasql-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "f7b9a61fea352e6546dc78641e2b5d12",
+        "sha1" : "8f2a14ac4e737130c9478eb38c792e118ffc70df",
+        "sha256" : "ba24b3efc7520f0144382978e15d6f230aa023a8943785ce2bd09424d3263940",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897684",
+        "gapv" : "io.apicurio:apicurio-registry-storage-kafkasql:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-storage-kafkasql-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-storage-kafkasql/2.3.3.Final-redhat-00001/apicurio-registry-storage-kafkasql-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "ee9a9d3eec45fdc10a17ea67e51f4380",
+        "sha1" : "dffad6e57b3ae08b2d5b6a6093a6b8b8a6660630",
+        "sha256" : "5bed2d1f2386468bbf973768de0ddd913c32c2cdbc66d49069f5be5dc2bab20a",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897685",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-common:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-common-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-common/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-common-2.3.3.Final-redhat-00001.jar",
+        "md5" : "5078309ab2c3bb543f28616e49f84865",
+        "sha1" : "1f6423264677ae9c51a6a127a474201f1864b3f4",
+        "sha256" : "9ff92809300735dbdcd300c05ae9651750942df4c4f62cdd1f1eef3d0180b490",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897686",
+        "gapv" : "io.apicurio:apicurio-registry-distro-connect-converter:tar.gz:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-distro-connect-converter-2.3.3.Final-redhat-00001.tar.gz",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-distro-connect-converter/2.3.3.Final-redhat-00001/apicurio-registry-distro-connect-converter-2.3.3.Final-redhat-00001.tar.gz",
+        "md5" : "53cf7c05db2aec06669cc8313330d55a",
+        "sha1" : "2defe1d1924aba85426cc4fe9c2c9be2e3cdf5da",
+        "sha256" : "50bfec672dc697886597f21df75c9e669afd3af961ad3fee1c23ae856e6bc72c",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897687",
+        "gapv" : "io.apicurio:apicurio-registry-utils-exportV1:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-utils-exportV1-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-exportV1/2.3.3.Final-redhat-00001/apicurio-registry-utils-exportV1-2.3.3.Final-redhat-00001.pom",
+        "md5" : "453381e774b18aa51fbc4e1434973a7e",
+        "sha1" : "e2bc128e1cae28451d40f52d03e56cb215b780fc",
+        "sha256" : "7959c6c44718f340ecfbc5b59be324e2332f5a023f87aee1ec372ea0578de509",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897688",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-provider:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-schema-util-provider-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-provider/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-provider-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "717b7d4993a1f435ceda87f39d1ee907",
+        "sha1" : "d97709cd1d47f4902e1257d23783d1be5851b41f",
+        "sha256" : "7fc17e3d8089365af1c1e55ad72b29bc1070176b9e3d21ac9c3c08f12b446789",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897689",
+        "gapv" : "io.apicurio:apicurio-registry-utils-converter:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-utils-converter-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-converter/2.3.3.Final-redhat-00001/apicurio-registry-utils-converter-2.3.3.Final-redhat-00001.jar",
+        "md5" : "6f05bfdd3c2634cca1c8fe98291f6919",
+        "sha1" : "70d9530e87d5c1ea79b63b1c056ef51da4fb1b24",
+        "sha256" : "a3966f4418b6e1470ac9e0dc5b8c41a003bfb3220600bc4ccb582dff2ba41fa0",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897690",
+        "gapv" : "io.apicurio:apicurio-registry-protobuf-schema-utilities:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-protobuf-schema-utilities-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-protobuf-schema-utilities/2.3.3.Final-redhat-00001/apicurio-registry-protobuf-schema-utilities-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "1b76ed2952179d232bcc00fd381410da",
+        "sha1" : "57d1b719a9430eb0587c71deb3255306ad49fae1",
+        "sha256" : "ea6a675acb9ed3687723936a5cd6a71ea9a6cfda809e5781232e649da74bdf7c",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897691",
+        "gapv" : "io.apicurio:apicurio-registry-utils-tools:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-utils-tools-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-tools/2.3.3.Final-redhat-00001/apicurio-registry-utils-tools-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "48a8dcd78bd2de51d17dc79e3680ab92",
+        "sha1" : "15f44a8153d30af4db307524cf92d9a5668a148e",
+        "sha256" : "d4de86cc6de0e782ed76589324dbc6a57fa517b37bd0f61b85d75a0d5dd284e4",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897692",
+        "gapv" : "io.apicurio:apicurio-registry-app:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-app-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-app/2.3.3.Final-redhat-00001/apicurio-registry-app-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "34d573bba955e83694c359c8e427cdd5",
+        "sha1" : "4737f4c421cbfdbebb2ee43c93abaafe7aa52829",
+        "sha256" : "cc9775d4ee06627162df32a87c53e3eefde96ec30b6956d3ce28a4d7a432dbaf",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897693",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-protobuf:jar:2.3.3.Final-redhat-00001:tests",
+        "fileName" : "apicurio-registry-schema-util-protobuf-2.3.3.Final-redhat-00001-tests.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-protobuf/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-protobuf-2.3.3.Final-redhat-00001-tests.jar",
+        "md5" : "a7a44b09266f504405d8647a8c076af6",
+        "sha1" : "7e7326813ed06b10767e2f0ef5b725665acc41a6",
+        "sha256" : "a3248af0155b2f7dfe16260dd99c2bdd32e2f6232f8449953680791b76c0582d",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897694",
+        "gapv" : "io.apicurio:apicurio-registry-tenant-manager-datamodel:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-tenant-manager-datamodel-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-tenant-manager-datamodel/2.3.3.Final-redhat-00001/apicurio-registry-tenant-manager-datamodel-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "2d14a48eaaabfb513badfb8f34610eea",
+        "sha1" : "df925324621816e95aed7de85a60757a080ac719",
+        "sha256" : "3a573d1707a12f36cab0477d784fc6f46fce0ed748775f3d0c6de3ad3c61b61b",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897695",
+        "gapv" : "io.apicurio:apicurio-registry-utils-tests:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-utils-tests-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-tests/2.3.3.Final-redhat-00001/apicurio-registry-utils-tests-2.3.3.Final-redhat-00001.pom",
+        "md5" : "8f4c3fbdbefd46590c2790e6631baa15",
+        "sha1" : "83d1f153df2729761c498851cd1f7975c1717fbf",
+        "sha256" : "ddfdf744ed1ab42a6cc1d5ab26acb805085c3c1c66ec54bc7bd1092cb57ca16b",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897696",
+        "gapv" : "io.apicurio:apicurio-registry-storage-sql:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-storage-sql-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-storage-sql/2.3.3.Final-redhat-00001/apicurio-registry-storage-sql-2.3.3.Final-redhat-00001.pom",
+        "md5" : "7931df2e837229462d9e1d79738d6ffa",
+        "sha1" : "e5cfcfdb9c9b19d6eb06b2fbd5ed200419fa01d9",
+        "sha256" : "3eae1acf1355c8aab71b7b88abcb3a8a01fb208d6f4c1b0751db549ab709f408",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897697",
+        "gapv" : "io.apicurio:apicurio-registry-serdes-jsonschema-serde:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-serdes-jsonschema-serde-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-serdes-jsonschema-serde/2.3.3.Final-redhat-00001/apicurio-registry-serdes-jsonschema-serde-2.3.3.Final-redhat-00001.jar",
+        "md5" : "e4573261d62bace06c93f5d582c9306d",
+        "sha1" : "d62de4c6fd066ee55e315ba4a075aa1a77207cc9",
+        "sha256" : "5c51d8095e122e7cbd0607003773ef41df9d893dfb6d42e1f40328d9bb153760",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897698",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-kconnect:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-schema-util-kconnect-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-kconnect/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-kconnect-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "f7e45260d9b95e3c15767ea793fdd517",
+        "sha1" : "016e4fda307ae14884167dbe5b31ed12b2aae01e",
+        "sha256" : "f3aac9bc072e55be5073867dc202461ade7b9bf2ef41491fc407de85852848ad",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897699",
+        "gapv" : "io.apicurio:apicurio-registry-utils-tests:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-utils-tests-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-tests/2.3.3.Final-redhat-00001/apicurio-registry-utils-tests-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "246e6016c591d5640038af4bb90374a7",
+        "sha1" : "04924636a671c02d99a35530d5a9d9e9195fba04",
+        "sha256" : "d944650c451f7e94aee7bab86573ccb7d063a54a2d56f22461720e801fbef9cc",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897700",
+        "gapv" : "io.apicurio:apicurio-registry-serde-common:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-serde-common-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-serde-common/2.3.3.Final-redhat-00001/apicurio-registry-serde-common-2.3.3.Final-redhat-00001.pom",
+        "md5" : "b596f32f85c51725bdb1a1dad4d71868",
+        "sha1" : "5d7670ce3164ec461a687f3966f21b7699ab9802",
+        "sha256" : "72a1c83dab853b7bf54c6c0e86effbb71ca3f426989faa88d104e7f27a3de2ea",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897701",
+        "gapv" : "io.apicurio:apicurio-registry-common:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-common-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-common/2.3.3.Final-redhat-00001/apicurio-registry-common-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "c48bc983f6042330b229055e0d49875d",
+        "sha1" : "4e5f529767adff72a99421f84417788fe5b9bd82",
+        "sha256" : "3246c5f5d63e3f5b3f125ae49a7bd65d344192ac87bfc974a162bef4a5754082",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897702",
+        "gapv" : "io.apicurio:apicurio-registry-storage-kafkasql:zip:2.3.3.Final-redhat-00001:all",
+        "fileName" : "apicurio-registry-storage-kafkasql-2.3.3.Final-redhat-00001-all.zip",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-storage-kafkasql/2.3.3.Final-redhat-00001/apicurio-registry-storage-kafkasql-2.3.3.Final-redhat-00001-all.zip",
+        "md5" : "428587ce233b41d0441224cc62d109a8",
+        "sha1" : "03fd3914d2848b1b6cb759cb60af1052143374e7",
+        "sha256" : "6bdc396714071ec681266215a4bcd47c07e98669052a4d27ad68be9021b75477",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897703",
+        "gapv" : "io.apicurio:apicurio-registry-app:jar:2.3.3.Final-redhat-00001:tests",
+        "fileName" : "apicurio-registry-app-2.3.3.Final-redhat-00001-tests.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-app/2.3.3.Final-redhat-00001/apicurio-registry-app-2.3.3.Final-redhat-00001-tests.jar",
+        "md5" : "079b9ff90cdb47fa74ac45600fb0a21c",
+        "sha1" : "8a00739545ddf66cdc8b93ff0313179e5b6d7d00",
+        "sha256" : "ff4a8c16e3edbcbc0b83cf689c3d6d8e40e6c3346a3338cc45df0f51b14da622",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897704",
+        "gapv" : "io.apicurio:apicurio-registry-app:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-app-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-app/2.3.3.Final-redhat-00001/apicurio-registry-app-2.3.3.Final-redhat-00001.jar",
+        "md5" : "103236335ff4d992f9ce013f2d35c27f",
+        "sha1" : "6fac7d3660623a9ddead3989d32e492651e96c41",
+        "sha256" : "d1f8923248d3b3d3660d9a09d7dc775c3a48b8a25e0ce98a822009f14d56987c",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897705",
+        "gapv" : "io.apicurio:apicurio-registry-serdes-avro-serde:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-serdes-avro-serde-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-serdes-avro-serde/2.3.3.Final-redhat-00001/apicurio-registry-serdes-avro-serde-2.3.3.Final-redhat-00001.jar",
+        "md5" : "3bb016f75c6e021298e3e922ad18d7b8",
+        "sha1" : "faf8f6eff6bc58fe76760eeda24f2874a4869fd5",
+        "sha256" : "3fb630d24673ab8da9947a817671bd41ce89ad05d4d7af1e109385e71d34699c",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897706",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-json:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-schema-util-json-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-json/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-json-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "a65e4c596d0c0f5df564fee69842baea",
+        "sha1" : "06e1babf9872ec20d371b29db6f84b4cca1e2a08",
+        "sha256" : "18d0f275c5b283b99b7093c035a8c412baf2b497790868c5816ab89d4cde9c3d",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897707",
+        "gapv" : "io.apicurio:apicurio-registry-utils-exportConfluent:zip:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-utils-exportConfluent-2.3.3.Final-redhat-00001.zip",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-exportConfluent/2.3.3.Final-redhat-00001/apicurio-registry-utils-exportConfluent-2.3.3.Final-redhat-00001.zip",
+        "md5" : "1148df9b6d619b76123dc847f1fa0a19",
+        "sha1" : "b3c85aa94f3113bce39145c257b8dbaf7451f289",
+        "sha256" : "8167e32067d2d61a16e35172f803a48191b246fe83d50e76f9f2a03176efea2a",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897708",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-provider:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-provider-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-provider/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-provider-2.3.3.Final-redhat-00001.pom",
+        "md5" : "d3e929270f61edb463c0fb2e7ebe385a",
+        "sha1" : "a9416e5127e0f9f5838791b456e9a698d654eadd",
+        "sha256" : "97f22c0b80e9cf1c8d2721614ed3a797f8669e95adb66a5eaee3fcbcf969b0d4",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897709",
+        "gapv" : "io.apicurio:apicurio-registry-storage-kafkasql:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-storage-kafkasql-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-storage-kafkasql/2.3.3.Final-redhat-00001/apicurio-registry-storage-kafkasql-2.3.3.Final-redhat-00001.pom",
+        "md5" : "a700bd4fe1bca7bce82d6c76f62f216e",
+        "sha1" : "b79b529cad5cfdf911fb8cb2740edb63676dad40",
+        "sha256" : "7eab8523b1b9a4a33ed1165c8155d676ffad7ff91a72ad9304f4a81021b34a30",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897710",
+        "gapv" : "io.apicurio:apicurio-registry-common:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-common-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-common/2.3.3.Final-redhat-00001/apicurio-registry-common-2.3.3.Final-redhat-00001.pom",
+        "md5" : "b559f82327e39a4d7c35b8005f657a6d",
+        "sha1" : "730ad728cc27288f23f4257a27fbba40e8e23488",
+        "sha256" : "88b317d627b369a0acde08748af0879ab0d271f45d6b786b83c4f1e2ea96a51b",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897711",
+        "gapv" : "io.apicurio:apicurio-registry-serdes-jsonschema-serde:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-serdes-jsonschema-serde-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-serdes-jsonschema-serde/2.3.3.Final-redhat-00001/apicurio-registry-serdes-jsonschema-serde-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "9d47f5a161cf8f82f595c25e11cae606",
+        "sha1" : "8c3afc2e1eda0ae62c56d8ad17eb79470ba3614b",
+        "sha256" : "233c4f16e15fe30350015cc818bcc8c672d25555eeac7c32e6a4978e6cfe35a8",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897712",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-wsdl:jar:2.3.3.Final-redhat-00001:tests",
+        "fileName" : "apicurio-registry-schema-util-wsdl-2.3.3.Final-redhat-00001-tests.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-wsdl/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-wsdl-2.3.3.Final-redhat-00001-tests.jar",
+        "md5" : "92a27f291dfc595adc65052b5043ea33",
+        "sha1" : "ca95d64ed09ac780bc9227668296e5f5c12975fe",
+        "sha256" : "37265b35d586db6c833e90e750c4131074f96a326f9c104eec709cda4eb51aba",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897713",
+        "gapv" : "io.apicurio:apicurio-registry-storage-sql:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-storage-sql-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-storage-sql/2.3.3.Final-redhat-00001/apicurio-registry-storage-sql-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "1efe0db974f44300569f22346ce8a97a",
+        "sha1" : "31837dcb2200935ae1f2ceea1cfe0b3909ce140a",
+        "sha256" : "7d55c71202b7182d2ace876810075a13d73aedf2bc27f35194ec6aa905d410da",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897714",
+        "gapv" : "io.apicurio:apicurio-registry-common:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-common-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-common/2.3.3.Final-redhat-00001/apicurio-registry-common-2.3.3.Final-redhat-00001.jar",
+        "md5" : "f715c99955a60023c5ddabf558fde24e",
+        "sha1" : "59f6d264dec4f375ac4773de7c5e2c4a65033feb",
+        "sha256" : "69877446a23f206101fb2da21ed1b15e36690c3b08fa8087cfd009884ef0d928",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897715",
+        "gapv" : "io.apicurio:apicurio-registry-utils-tools:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-utils-tools-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-tools/2.3.3.Final-redhat-00001/apicurio-registry-utils-tools-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "33b8ee6e7481e4d1c67af7ececaf144a",
+        "sha1" : "f8fa817a8eab526198221dc9058ed96d693217a3",
+        "sha256" : "cef5da2ef400002402aff95f8f20cf0305b79a17de4f42cce77b51b2f0b96de5",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897716",
+        "gapv" : "io.apicurio:apicurio-registry-app:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-app-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-app/2.3.3.Final-redhat-00001/apicurio-registry-app-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "9c6305c721d9f2c81c274fd16dd9f71e",
+        "sha1" : "58b5c7455785e13078e34e693e15275cb199347f",
+        "sha256" : "e465b272db26975e28bbfb53f9f0bddeb6e6a0eaf5d7f4c946ae5ab822daaf87",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897717",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-asyncapi:jar:2.3.3.Final-redhat-00001:javadoc",
+        "fileName" : "apicurio-registry-schema-util-asyncapi-2.3.3.Final-redhat-00001-javadoc.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-asyncapi/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-asyncapi-2.3.3.Final-redhat-00001-javadoc.jar",
+        "md5" : "992f31d2e570b1b32e9370c8906d28ae",
+        "sha1" : "71e39927e4abef51288e1c188fa69a1d635d4d1f",
+        "sha256" : "8ad9ccfa9f5ecd04b3ee696d24c5681dfdf2e6b6ea6d04b07f7e6c93e97ea3de",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897718",
+        "gapv" : "io.apicurio:apicurio-registry-tenant-manager-datamodel:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-tenant-manager-datamodel-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-tenant-manager-datamodel/2.3.3.Final-redhat-00001/apicurio-registry-tenant-manager-datamodel-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "e8fed4b1d141e4496f17728aa24191d0",
+        "sha1" : "fe705c1b017bbad1765f03ea5a436cd2e2828f69",
+        "sha256" : "ad7f8aaecdade63e23dad1f11e14fecbdc7794c37a8d792f6ea59514d8edd424",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897719",
+        "gapv" : "io.apicurio:apicurio-registry-utils-exportV1:zip:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-utils-exportV1-2.3.3.Final-redhat-00001.zip",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-exportV1/2.3.3.Final-redhat-00001/apicurio-registry-utils-exportV1-2.3.3.Final-redhat-00001.zip",
+        "md5" : "2cb924d96ca68a92c6a6b8cdb192b7ce",
+        "sha1" : "82109c4989b75c96469dff9465b1cb3b56595eee",
+        "sha256" : "2160612e646076e25e89b9b733a13bcdbd459c1bace63e92640035a1cc39daf2",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897720",
+        "gapv" : "io.apicurio:apicurio-registry-ui:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-ui-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-ui/2.3.3.Final-redhat-00001/apicurio-registry-ui-2.3.3.Final-redhat-00001.pom",
+        "md5" : "e42cafa8ff18d8f34510b7c13eca34d3",
+        "sha1" : "66a83d0d76725c5ede7749b0b30d7d8e29715f48",
+        "sha256" : "f37fbce388664cabec26ce5a3403d753567b878b93d5f1ef7b4f25ca1f20f5be",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897721",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-graphql:jar:2.3.3.Final-redhat-00001:tests",
+        "fileName" : "apicurio-registry-schema-util-graphql-2.3.3.Final-redhat-00001-tests.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-graphql/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-graphql-2.3.3.Final-redhat-00001-tests.jar",
+        "md5" : "468f8022d07bf35a8505954d81a3c9e9",
+        "sha1" : "c287ed056eca7c122ecb976487edcf00d4deb097",
+        "sha256" : "3102cd29630e4c5c7d79e59e54c55d08d4a5da29186a6cdbea9671f228f8b5dc",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897722",
+        "gapv" : "io.apicurio:apicurio-registry-storage-kafkasql:tar.gz:2.3.3.Final-redhat-00001:all",
+        "fileName" : "apicurio-registry-storage-kafkasql-2.3.3.Final-redhat-00001-all.tar.gz",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-storage-kafkasql/2.3.3.Final-redhat-00001/apicurio-registry-storage-kafkasql-2.3.3.Final-redhat-00001-all.tar.gz",
+        "md5" : "0b3ac4621594f3acaf72704547b403d3",
+        "sha1" : "869357a4644973921b383caf29e7e333c95f0ba9",
+        "sha256" : "2b29c9b0e8ae657c7febc0d3acc998890b5d28227fe777c4f870dfade375d2db",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897723",
+        "gapv" : "io.apicurio:apicurio-registry-storage-kafkasql:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-storage-kafkasql-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-storage-kafkasql/2.3.3.Final-redhat-00001/apicurio-registry-storage-kafkasql-2.3.3.Final-redhat-00001.jar",
+        "md5" : "885147ef5dae7a017a5bbf1a8785acab",
+        "sha1" : "1d8e2e4be0ef1308c450a4aa3b00705d5873f762",
+        "sha256" : "b6af828633766894047a007e688638b9a9b827f7827cfc434a3bc61142570c88",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897724",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-xsd:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-xsd-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-xsd/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-xsd-2.3.3.Final-redhat-00001.jar",
+        "md5" : "00af910db50052bb14493d4812688994",
+        "sha1" : "c7b9a0ae176fa19b02f25a6eae65f1e54f955c8e",
+        "sha256" : "597444bb919c8595c2722218c4ac6cfc39af3247f95cd6c656187ac2830c61c9",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897725",
+        "gapv" : "io.apicurio:apicurio-registry-storage-sql:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-storage-sql-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-storage-sql/2.3.3.Final-redhat-00001/apicurio-registry-storage-sql-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "e69b75c7c0499b70b6e7199c33363371",
+        "sha1" : "4b08aaf639ce7f0e431b8782d12d2616cefd6670",
+        "sha256" : "57510a2aa129b5c81229ac665e1b1a9fb6bd2812cc0573aaa035934167e796ae",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897726",
+        "gapv" : "io.apicurio:apicurio-registry-serdes-jsonschema-serde:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-serdes-jsonschema-serde-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-serdes-jsonschema-serde/2.3.3.Final-redhat-00001/apicurio-registry-serdes-jsonschema-serde-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "748922963c764904fd031473bd060418",
+        "sha1" : "2098851131cb3b2d8473fb3c662fe425bb8e25cf",
+        "sha256" : "e51511e06ba252d545cc31d402df29a3540b7d9ea1da36f5539977b79c03895c",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897727",
+        "gapv" : "io.apicurio:apicurio-registry-utils-exportConfluent:jar:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-utils-exportConfluent-2.3.3.Final-redhat-00001.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-exportConfluent/2.3.3.Final-redhat-00001/apicurio-registry-utils-exportConfluent-2.3.3.Final-redhat-00001.jar",
+        "md5" : "19b49d987142090bde60bd5c8e8b0b31",
+        "sha1" : "889995d92375d6b961621146e694f55852ea18e9",
+        "sha256" : "d1fc75b16a5c2153b29d9293a96de0fd8b6fcf3ddae35b5b8ff6399dd4260f15",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897728",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-provider:jar:2.3.3.Final-redhat-00001:sources",
+        "fileName" : "apicurio-registry-schema-util-provider-2.3.3.Final-redhat-00001-sources.jar",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-provider/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-provider-2.3.3.Final-redhat-00001-sources.jar",
+        "md5" : "dc6d5446d079fc34c4e2e905836f2616",
+        "sha1" : "f50a1833bf975c4655db6224ce812c79415544aa",
+        "sha256" : "d475ff691c9dc20e78a37a363b88a17272ae761fda5eac2a44740899cb9af386",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897729",
+        "gapv" : "io.apicurio:apicurio-registry-schema-util-xsd:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-schema-util-xsd-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-schema-util-xsd/2.3.3.Final-redhat-00001/apicurio-registry-schema-util-xsd-2.3.3.Final-redhat-00001.pom",
+        "md5" : "7d8059bcd9edfcf33fd5b880d1cb532d",
+        "sha1" : "9523e829f3a38b88b25dd9ae3803cf9fc2cf6fbb",
+        "sha256" : "c9579fcbd305af4834a8b2d2f044ab98ce57d87f413dd63e06379b232bc52abb",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897730",
+        "gapv" : "io.apicurio:apicurio-registry-utils-exportConfluent:tar.gz:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-utils-exportConfluent-2.3.3.Final-redhat-00001.tar.gz",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-exportConfluent/2.3.3.Final-redhat-00001/apicurio-registry-utils-exportConfluent-2.3.3.Final-redhat-00001.tar.gz",
+        "md5" : "5e1eaa319497d0b0cd94793d038ee346",
+        "sha1" : "f525688ba46c3756eb4ee460dc24cf7d0a35f06d",
+        "sha256" : "9db20a5aa7d9f10fa9e97aafd91e5b387e187c4323a2259470c12b1509834edd",
+        "repositoryType" : "MAVEN"
+      }, {
+        "id" : "9897731",
+        "gapv" : "io.apicurio:apicurio-registry-utils-exportConfluent:pom:2.3.3.Final-redhat-00001",
+        "fileName" : "apicurio-registry-utils-exportConfluent-2.3.3.Final-redhat-00001.pom",
+        "downloadUrl" : "https://indy.psi.redhat.com/api/content/maven/hosted/pnc-builds/io/apicurio/apicurio-registry-utils-exportConfluent/2.3.3.Final-redhat-00001/apicurio-registry-utils-exportConfluent-2.3.3.Final-redhat-00001.pom",
+        "md5" : "494665f6c5fc1a99f75f7bf9c1077b35",
+        "sha1" : "afe4aad89a66d00415a28e85ce13a57186a81e3f",
+        "sha256" : "4c2a2fccefb44ac35300a796de89700b36fd8a82a4447372832d9c78f22cb5de",
+        "repositoryType" : "MAVEN"
+      } ],
+      "dependencyArtifacts" : null
+    }
+  },
+  "repositoryData" : null,
+  "deliverables" : {
+    "repositoryZipName" : "service-registry-2.3.3.CR1-maven-repository.zip",
+    "sourceZipName" : null,
+    "licenseZipName" : null,
+    "javadocZipName" : null,
+    "communityDependencies" : "community-dependencies.csv",
+    "repoCoordinatesName" : "REPOSITORY_COORDINATES.properties",
+    "artifactListName" : "repository-artifact-list.txt",
+    "duplicateArtifactListName" : "repository-duplicate-artifact-list.txt",
+    "nvrListName" : "service-registry-2.3.3.CR1-nvr-list.txt",
+    "sharedContentReport" : "shared-content-report.csv"
+  },
+  "targetPath" : "target",
+  "releaseDirName" : "red-hat-integration-service-registry-2.3.3.CR1",
+  "releasePath" : "/home/vikrakum/Desktop/midstreamRepo/target/red-hat-integration-service-registry-2.3.3.CR1/",
+  "extrasPath" : "/home/vikrakum/Desktop/midstreamRepo/target/red-hat-integration-service-registry-2.3.3.CR1/extras/",
+  "configSha" : "db99d7435438584f6827f8a6a6a938f0968a2945873f42996fd175fa71a1ca0778445456ddde4c2e605f7b56865cd7c0b76a782db3be2d2c4186bd53336accff",
+  "tempBuild" : false,
+  "contextLocation" : "/home/vikrakum/Desktop/midstreamRepo/.bacon/pig-context.json",
+  "prefix" : "service-registry-2.3.3.CR1",
+  "fullVersion" : "2.3.3.CR1",
+  "checksums" : null
+}

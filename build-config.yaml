@@ -1,0 +1,112 @@
+##############################################################################################################
+# Milestone Should be DR if maven goal is install                                                            #
+# Milestone Should be CR if maven goal is deploy                                                 #
+##############################################################################################################
+  
+#!productVersion=2.3.3
+#!milestone=CR1
+#!projectVersion=2.3.3.Final
+#!scmRevision=2.3.x-redhat
+  
+  
+#!projectName=service-registry
+#!productName=Red Hat Integration Service Registry
+#!abbreviation=RHISR
+#!groupConfigName={{abbreviation}}-{{productVersion}}.{{milestone}}
+#!buildConfigName={{projectName}}-{{projectVersion}}.{{milestone}}
+  
+  
+  
+##############################################################################################################
+#                                      PNC Product Configuration                                             #
+##############################################################################################################
+product:
+  name: {{productName}}
+  abbreviation: {{abbreviation}}
+  issueTrackerUrl: http://issues.jboss.org/browse/IPT
+version: {{productVersion}}
+milestone: {{milestone}}
+group: {{groupConfigName}}
+  
+##############################################################################################################
+#                                        PNC Build Configuration                                             #
+##############################################################################################################
+  
+defaultBuildParameters:
+  buildType: MVN
+  environmentId: 425  #To List environmentId: "bacon pnc environment list"  
+  buildCategory: STANDARD
+  
+builds:
+  - name: {{buildConfigName}}
+    environmentId: 425
+    buildPodMemory: 6
+    project: {{projectName}}
+    scmUrl: git+ssh://code.engineering.redhat.com/redhat-integration/apicurio-registry.git
+    scmRevision: {{scmRevision}}
+    buildScript: |
+      ls -lrt
+      export REG="http://indy.indy.svc.cluster.local/api/folo/track/${buildContentId}/npm/remote/yarnpkg/"
+      sed -i "s#https://registry.npmjs.org/#${REG}#g" ui/package-lock.json
+      sed -i 's#https:#http:#g' ui/package-lock.json
+      #sed -i "s#https://registry.yarnpkg.com/#${REG}#g" ui/package-lock.json
+  
+      
+      mvn -B install -pl '!docs, !docs/rest-api' \
+          dependency:tree \
+          -DskipTests \
+          -Dtar.long.file.mode=posix \
+          -Dproxy-server=$REG \
+          -Dcustom-registry=$REG \
+          -DnpmRegistryURL2=$REG \
+          -Dyarn-insecure \
+          -DyarnRegistry=$REG \
+          -Dproxy-user="${buildContentId}+tracking" \
+          -Dproxy-password="${accessToken}" \
+          -Dproxy-port="${proxyPort}" \
+          -DyarnDownloadRoot=http://download.eng.bos.redhat.com/rcm-guest/staging/integration/service-registry-dev/dist/yarn/ \
+          -DnodeDownloadRoot=http://download.eng.bos.redhat.com/rcm-guest/staging/integration/service-registry-dev/dist/node/ \
+          -DnpmDownloadRoot=http://download-node-02.eng.bos.redhat.com/rcm-guest/staging/fuse/npm/dist/npm/ \
+          -Pwith-proxy \
+          -Pwith-custom-registry \
+          -Pverbose \
+          -Pprod \
+          -Pkafkasql \
+          -Psql
+  
+    alignmentParameters:
+      - -DgroovyScripts=https://gitlab.cee.redhat.com/service-registry/srs-ci-tools/-/raw/pnc-rhi-service-registry/pme-scripts/GenericManipulations.groovy,https://gitlab.cee.redhat.com/service-registry/srs-ci-tools/-/raw/pnc-rhi-service-registry/pme-scripts/Exclusions.groovy
+      - -DversionOverride={{projectVersion}}
+      - -DstrictPropertyValidation=false
+      - -DdependencyOverride.io.confluent:kafka-schema-registry-client@*=7.3.0
+      - -DdependencyOverride.org.yaml:snakeyaml@*=1.33.0.redhat-00001
+  
+    extraRepositories:
+      - https://packages.confluent.io/maven/
+  
+  
+##############################################################################################################
+#                            PiG Configuration - Release Artifacts Generation                                #
+##############################################################################################################
+outputPrefixes:
+  releaseFile: {{projectName}}
+  releaseDir: {{projectName}}
+flow:
+  licensesGeneration:
+    strategy: GENERATE
+  repositoryGeneration:
+    strategy: BUILD_CONFIGS
+    sourceBuilds:
+      - {{buildConfigName}}
+    excludeArtifacts:
+      - '.*@redhat-cloud-services.*'
+  javadocGeneration:
+    strategy: GENERATE
+  sourcesGeneration:
+    strategy: GENERATE
+  
+  
+addons:
+  #microProfileSmallRyeCommunityDepAnalyzer:
+  notYetAlignedFromDependencyTree:
+  offlineManifestGenerator:
