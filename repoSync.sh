@@ -57,15 +57,33 @@ repoSyncing() {
     echo "---------------Process End------------------------------------------"
 }
 
+show_help() {
+    echo ""
+    echo "Usage: ./repoSync [sync branch] [target branc]"
+    echo ""
+    echo "sync branch     branch in where you want to sync upstream"
+    echo "target branch   upstream branch from where you wanna pick up sync"
+    echo ""
+}
+
+
 main() {
-    if [ $# -ne 2 ]; then
-        echo "Use as: $0 [sync Branch] target Branch"
+    if [ $# -lt 1 ]; then
+        echo "Use as: $0 [sync Branch] [target Branch]"
+        echo "pass -h|--help for in detail description"
         exit 1
     fi
-    target_upstream_branch=$1
-    syncBranch=$2
-    repoSyncing ${syncBranch} ${target_upstream_branch}
-    # exit 0
+
+    while [[ "$#" -gt 0 ]]; do
+        case $1 in
+            -h|--help) show_help; exit 0;;
+            *)
+                target_upstream_branch=$1
+                syncBranch=$2
+                repoSyncing ${syncBranch} ${target_upstream_branch}
+        esac
+        shift
+    done
 }
 
 main $*
