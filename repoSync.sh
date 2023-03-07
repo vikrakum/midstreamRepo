@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -euxo pipefail
+set -euo pipefail
 
 
 # Being at midstream repo sync updates from upstream repo(from master branch) in branch named "syncBranch" 
@@ -12,6 +12,8 @@ set -euxo pipefail
 # git fetch from upstream master and git merge the changes and look into cases of merge conflict.
 
 repoSyncing() {
+    local target_upstream_branch=$1
+    local syncBranch=$2
     echo "----------------Syncing process started--------------------------------------------"
 
     # Cheking if working tree clean!
@@ -30,9 +32,8 @@ repoSyncing() {
         fi
         git add .
         echo "Enter commit message"
-        read message
         echo "Commiting and pushing all changes made, with DCO sign"
-        git commit -s -m "$message"
+        git commit -s -m "commiting all changes b4 starting sync process"
         git push -u origin ${branch}
     else
         echo "----Working tree clean!----"
@@ -43,15 +44,14 @@ repoSyncing() {
     echo "Branches List"
     git branch
     echo "Enter sync branch name"
-    read syncBranch
     echo "----switching to sync branch----"
     git checkout ${syncBranch}
     echo "fetching + merging changes from ORIGIN master"
     git fetch origin master
     git merge origin/master
     echo "fetching + merging changes from UPSTREAM master"
-    git fetch upstream master
-    git merge upstream/master
+    git fetch upstream ${target_upstream_branch}
+    git merge --strategy-option=ours upstream/${target_upstream_branch}
     echo "Logging recent details for you."
     git log --oneline
     git push -u origin ${syncBranch}
@@ -60,8 +60,14 @@ repoSyncing() {
 }
 
 main() {
-    repoSyncing
-    exit 0
+    if [ $# -ne 2 ]; then
+        echo "Use as: $0 [sync Branch] target Branch"
+        exit 1
+    fi
+    target_upstream_branch=$1
+    syncBranch=$2
+    repoSyncing ${syncBranch} ${target_upstream_branch}
+    # exit 0
 }
 
 main $*
