@@ -78,8 +78,8 @@ main() {
         case $1 in
             -h|--help) show_help; exit 0;;
             *)
-                target_upstream_branch=$1
-                syncBranch=$2
+                syncBranch=$1
+                target_upstream_branch=$2
                 repoSyncing ${syncBranch} ${target_upstream_branch}
         esac
         shift
