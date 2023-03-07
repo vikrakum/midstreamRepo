@@ -53,7 +53,7 @@ repoSyncing() {
     git fetch upstream ${target_upstream_branch}
     git merge --strategy-option=ours upstream/${target_upstream_branch}
     echo "Logging recent details for you."
-    git log --oneline
+    git log --oneline --max-count=10
     git push -u origin ${syncBranch}
     
     echo "---------------Process End------------------------------------------"
