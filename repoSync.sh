@@ -12,8 +12,9 @@ set -euo pipefail
 # git fetch from upstream master and git merge the changes and look into cases of merge conflict.
 
 repoSyncing() {
-    local target_upstream_branch=$1
-    local syncBranch=$2
+    local syncBranch=$1
+    local target_upstream_branch=$2
+
     echo "----------------Syncing process started--------------------------------------------"
 
     # Cheking if working tree clean!
