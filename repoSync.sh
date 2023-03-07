@@ -47,7 +47,7 @@ repoSyncing() {
     git checkout ${syncBranch}
     echo "--fetching + merging changes from ORIGIN master"
     git fetch origin master
-    git merge origin/master
+    git merge origin/master -m "merging origin/master into branch $syncBranch"
     echo "--fetching + merging changes from UPSTREAM master"
     git fetch upstream ${target_upstream_branch}
     git merge --strategy-option=ours upstream/${target_upstream_branch}
