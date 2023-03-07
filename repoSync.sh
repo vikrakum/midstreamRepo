@@ -71,7 +71,7 @@ show_help() {
 main() {
     if [ $# -lt 1 ]; then
         echo "Use as: $0 [sync Branch] [target Branch]"
-        echo "pass -h|--help for in detail description"
+        echo "-h|--help   for in detail description"
         exit 1
     fi
 
